@@ -7,7 +7,7 @@
 extern const struct RecipeAttributes {
 	__unsafe_unretained NSString *difficulty;
 	__unsafe_unretained NSString *favorite;
-	__unsafe_unretained NSString *instruction;
+	__unsafe_unretained NSString *instructions;
 	__unsafe_unretained NSString *name;
 	__unsafe_unretained NSString *photoURL;
 	__unsafe_unretained NSString *recipeDescription;
@@ -68,11 +68,11 @@ extern const struct RecipeFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSString* instruction;
+@property (nonatomic, strong) NSString* instructions;
 
 
 
-//- (BOOL)validateInstruction:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateInstructions:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -136,8 +136,8 @@ extern const struct RecipeFetchedProperties {
 
 
 
-- (NSString*)primitiveInstruction;
-- (void)setPrimitiveInstruction:(NSString*)value;
+- (NSString*)primitiveInstructions;
+- (void)setPrimitiveInstructions:(NSString*)value;
 
 
 

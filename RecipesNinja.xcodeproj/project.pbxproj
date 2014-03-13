@@ -24,8 +24,10 @@
 		C3EAAEC218D0A8F30097AE02 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C3EAAEC018D0A8F30097AE02 /* InfoPlist.strings */; };
 		C3EAAEC418D0A8F30097AE02 /* RecipesNinjaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EAAEC318D0A8F30097AE02 /* RecipesNinjaTests.m */; };
 		C3F76DE318D1A48F00BC5467 /* RecipesAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F76DE218D1A48F00BC5467 /* RecipesAPIClient.m */; };
-		C3F76DE918D1AAA100BC5467 /* _Recipe.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F76DE618D1AAA100BC5467 /* _Recipe.m */; };
 		C3F76DEA18D1AAA100BC5467 /* Recipe.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F76DE818D1AAA100BC5467 /* Recipe.m */; };
+		C3F76DEF18D1AD5F00BC5467 /* RecipesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F76DEE18D1AD5F00BC5467 /* RecipesTableViewController.m */; };
+		C3F76DF218D1B20700BC5467 /* RecipesIncrementalStore.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F76DF118D1B20700BC5467 /* RecipesIncrementalStore.m */; };
+		C3F76DF518D1E1AF00BC5467 /* _Recipe.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F76DF418D1E1AF00BC5467 /* _Recipe.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,10 +63,14 @@
 		C3EAAEC318D0A8F30097AE02 /* RecipesNinjaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecipesNinjaTests.m; sourceTree = "<group>"; };
 		C3F76DE118D1A48F00BC5467 /* RecipesAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecipesAPIClient.h; sourceTree = "<group>"; };
 		C3F76DE218D1A48F00BC5467 /* RecipesAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipesAPIClient.m; sourceTree = "<group>"; };
-		C3F76DE518D1AAA100BC5467 /* _Recipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Recipe.h; sourceTree = "<group>"; };
-		C3F76DE618D1AAA100BC5467 /* _Recipe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Recipe.m; sourceTree = "<group>"; };
 		C3F76DE718D1AAA100BC5467 /* Recipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recipe.h; sourceTree = "<group>"; };
 		C3F76DE818D1AAA100BC5467 /* Recipe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Recipe.m; sourceTree = "<group>"; };
+		C3F76DED18D1AD5F00BC5467 /* RecipesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecipesTableViewController.h; sourceTree = "<group>"; };
+		C3F76DEE18D1AD5F00BC5467 /* RecipesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipesTableViewController.m; sourceTree = "<group>"; };
+		C3F76DF018D1B20700BC5467 /* RecipesIncrementalStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecipesIncrementalStore.h; sourceTree = "<group>"; };
+		C3F76DF118D1B20700BC5467 /* RecipesIncrementalStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipesIncrementalStore.m; sourceTree = "<group>"; };
+		C3F76DF318D1E1AF00BC5467 /* _Recipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Recipe.h; sourceTree = "<group>"; };
+		C3F76DF418D1E1AF00BC5467 /* _Recipe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Recipe.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +141,8 @@
 				C3F76DEC18D1AAC000BC5467 /* Models */,
 				C3EAAEA918D0A8F30097AE02 /* AppDelegate.h */,
 				C3EAAEAA18D0A8F30097AE02 /* AppDelegate.m */,
+				C3F76DED18D1AD5F00BC5467 /* RecipesTableViewController.h */,
+				C3F76DEE18D1AD5F00BC5467 /* RecipesTableViewController.m */,
 				C3EAAEAF18D0A8F30097AE02 /* Images.xcassets */,
 				C3EAAEAC18D0A8F30097AE02 /* RecipesNinja.xcdatamodeld */,
 				C3EAAEA118D0A8F30097AE02 /* Supporting Files */,
@@ -176,6 +184,8 @@
 			children = (
 				C3F76DE118D1A48F00BC5467 /* RecipesAPIClient.h */,
 				C3F76DE218D1A48F00BC5467 /* RecipesAPIClient.m */,
+				C3F76DF018D1B20700BC5467 /* RecipesIncrementalStore.h */,
+				C3F76DF118D1B20700BC5467 /* RecipesIncrementalStore.m */,
 			);
 			name = AFNetworking;
 			sourceTree = "<group>";
@@ -183,8 +193,8 @@
 		C3F76DEB18D1AAB000BC5467 /* CoreDataModels */ = {
 			isa = PBXGroup;
 			children = (
-				C3F76DE518D1AAA100BC5467 /* _Recipe.h */,
-				C3F76DE618D1AAA100BC5467 /* _Recipe.m */,
+				C3F76DF318D1E1AF00BC5467 /* _Recipe.h */,
+				C3F76DF418D1E1AF00BC5467 /* _Recipe.m */,
 			);
 			name = CoreDataModels;
 			sourceTree = "<group>";
@@ -328,9 +338,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C3F76DE918D1AAA100BC5467 /* _Recipe.m in Sources */,
 				C3F76DEA18D1AAA100BC5467 /* Recipe.m in Sources */,
+				C3F76DF218D1B20700BC5467 /* RecipesIncrementalStore.m in Sources */,
 				C3EAAEAB18D0A8F30097AE02 /* AppDelegate.m in Sources */,
+				C3F76DF518D1E1AF00BC5467 /* _Recipe.m in Sources */,
+				C3F76DEF18D1AD5F00BC5467 /* RecipesTableViewController.m in Sources */,
 				C3F76DE318D1A48F00BC5467 /* RecipesAPIClient.m in Sources */,
 				C3EAAEAE18D0A8F30097AE02 /* RecipesNinja.xcdatamodeld in Sources */,
 				C3EAAEA718D0A8F30097AE02 /* main.m in Sources */,

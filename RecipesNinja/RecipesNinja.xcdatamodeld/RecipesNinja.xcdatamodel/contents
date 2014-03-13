@@ -3,7 +3,7 @@
     <entity name="Recipe" representedClassName="Recipe" syncable="YES">
         <attribute name="difficulty" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="favorite" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="instruction" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="instructions" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="photoURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="recipeDescription" optional="YES" attributeType="String" syncable="YES"/>

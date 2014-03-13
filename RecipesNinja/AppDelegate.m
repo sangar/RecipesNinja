@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "RecipesTableViewController.h"
+#import "RecipesIncrementalStore.h"
 
 @implementation AppDelegate
 
@@ -16,9 +18,21 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSURLCache *URLCache = [[NSURLCache alloc] initWithMemoryCapacity:8 * 1024 * 1024 diskCapacity:20 * 1024 * 1024 diskPath:nil];
+    [NSURLCache setSharedURLCache:URLCache];
+    
+    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
+    
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+    
+
+    RecipesTableViewController *rootViewController = [[RecipesTableViewController alloc] initWithStyle:UITableViewStylePlain];
+    UINavigationController *rootNavController = [[UINavigationController alloc] initWithRootViewController:rootViewController];
+    self.window.rootViewController = rootNavController;
+    
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -77,7 +91,7 @@
     
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil) {
-        _managedObjectContext = [[NSManagedObjectContext alloc] init];
+        _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
         [_managedObjectContext setPersistentStoreCoordinator:coordinator];
     }
     return _managedObjectContext;
@@ -107,7 +121,11 @@
     
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+    
+    AFIncrementalStore *incrementalStore = (AFIncrementalStore *)[_persistentStoreCoordinator addPersistentStoreWithType:[RecipesIncrementalStore type] configuration:nil URL:nil options:nil error:nil];
+    
+    
+    if (![incrementalStore.backingPersistentStoreCoordinator addPersistentStoreWithType:NSInMemoryStoreType configuration:nil URL:storeURL options:nil error:&error]) {
         /*
          Replace this implementation with code to handle the error appropriately.
          

@@ -6,7 +6,7 @@
 const struct RecipeAttributes RecipeAttributes = {
 	.difficulty = @"difficulty",
 	.favorite = @"favorite",
-	.instruction = @"instruction",
+	.instructions = @"instructions",
 	.name = @"name",
 	.photoURL = @"photoURL",
 	.recipeDescription = @"recipeDescription",
@@ -113,7 +113,7 @@ const struct RecipeFetchedProperties RecipeFetchedProperties = {
 
 
 
-@dynamic instruction;
+@dynamic instructions;
 
 
 

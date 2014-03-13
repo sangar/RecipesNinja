@@ -34,17 +34,32 @@ static NSString * const kRecipesAPIURLString = @"http://hyper-recipes.herokuapp.
     return self;
 }
 
+- (NSNumber *)numberFromPossibleNull:(id)value {
+    
+    if ([value isKindOfClass:[NSNull class]]) {
+        return [NSNumber numberWithInteger:0];
+    }
+
+    return [NSNumber numberWithInteger:[value integerValue]];
+}
+
 - (NSDictionary *)attributesForRepresentation:(NSDictionary *)representation
                                      ofEntity:(NSEntityDescription *)entity
                                  fromResponse:(NSHTTPURLResponse *)response
 {
     NSMutableDictionary *mutablePropertyValues = [[super attributesForRepresentation:representation ofEntity:entity fromResponse:response] mutableCopy];
+    
+    
+//    NSLog(@"Entity name: %@", entity.name);
+//    NSLog(@"Representation: %@", representation);
+    
     if ([entity.name isEqualToString:@"Recipe"]) {
+        
         NSString *name = [representation valueForKey:@"name"];
         NSString *description = [representation valueForKey:@"description"];
         NSString *instructions = [representation valueForKey:@"instructions"];
-        NSNumber *favorite = [representation valueForKey:@"favorite"];
-        NSNumber *difficulty = [representation valueForKey:@"difficulty"];
+        NSNumber *favorite = [self numberFromPossibleNull:[representation valueForKey:@"favorite"]];
+        NSNumber *difficulty = [self numberFromPossibleNull:[representation valueForKey:@"difficulty"]];
         NSString *photoURL = [representation valueForKeyPath:@"photo.url"];
         
         [mutablePropertyValues setValue:name forKey:@"name"];

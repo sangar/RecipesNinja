@@ -7,6 +7,7 @@
 //
 
 #import "RecipesTableViewController.h"
+#import "RecipesTableViewCell.h"
 #import "Recipe.h"
 
 @interface RecipesTableViewController () <NSFetchedResultsControllerDelegate>
@@ -42,7 +43,7 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reloadData)];
     
     
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:reuseIdentifier];
+    [self.tableView registerClass:[RecipesTableViewCell class] forCellReuseIdentifier:reuseIdentifier];
 }
 
 - (void)didReceiveMemoryWarning
@@ -51,6 +52,8 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
     // Dispose of any resources that can be recreated.
 }
 
+
+#pragma mark -
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -66,20 +69,35 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
+    RecipesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    Recipe *recipe = (Recipe *) [_fetchedResultsController objectAtIndexPath:indexPath];
+    cell.recipe = (Recipe *) [_fetchedResultsController objectAtIndexPath:indexPath];
     
-    NSLog(@"Recipe for cell: %@", recipe);
-    
-    cell.textLabel.text = [recipe valueForKey:@"name"];
     
     return cell;
 }
 
+
 #pragma mark -
-#pragma mark NSFetchedResultsController delegate methods
+#pragma mark - Table view delegate methods
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 140.f;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    Recipe *recipe = (Recipe *) [_fetchedResultsController objectAtIndexPath:indexPath];
+    
+    NSLog(@"%@", recipe);
+    
+    
+}
+
+
+#pragma mark -
+#pragma mark - NSFetchedResultsController delegate methods
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self.tableView reloadData];

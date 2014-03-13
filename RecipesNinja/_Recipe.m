@@ -10,6 +10,7 @@ const struct RecipeAttributes RecipeAttributes = {
 	.name = @"name",
 	.photoURL = @"photoURL",
 	.recipeDescription = @"recipeDescription",
+	.rid = @"rid",
 };
 
 const struct RecipeRelationships RecipeRelationships = {
@@ -51,6 +52,11 @@ const struct RecipeFetchedProperties RecipeFetchedProperties = {
 	}
 	if ([key isEqualToString:@"favoriteValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"favorite"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
+	if ([key isEqualToString:@"ridValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"rid"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 		return keyPaths;
 	}
@@ -136,6 +142,32 @@ const struct RecipeFetchedProperties RecipeFetchedProperties = {
 
 @dynamic recipeDescription;
 
+
+
+
+
+
+@dynamic rid;
+
+
+
+- (int32_t)ridValue {
+	NSNumber *result = [self rid];
+	return [result intValue];
+}
+
+- (void)setRidValue:(int32_t)value_ {
+	[self setRid:[NSNumber numberWithInt:value_]];
+}
+
+- (int32_t)primitiveRidValue {
+	NSNumber *result = [self primitiveRid];
+	return [result intValue];
+}
+
+- (void)setPrimitiveRidValue:(int32_t)value_ {
+	[self setPrimitiveRid:[NSNumber numberWithInt:value_]];
+}
 
 
 

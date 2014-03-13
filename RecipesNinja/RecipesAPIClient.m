@@ -55,6 +55,7 @@ static NSString * const kRecipesAPIURLString = @"http://hyper-recipes.herokuapp.
     
     if ([entity.name isEqualToString:@"Recipe"]) {
         
+        NSNumber *rid = [representation valueForKey:@"id"];
         NSString *name = [representation valueForKey:@"name"];
         NSString *description = [representation valueForKey:@"description"];
         NSString *instructions = [representation valueForKey:@"instructions"];
@@ -62,6 +63,7 @@ static NSString * const kRecipesAPIURLString = @"http://hyper-recipes.herokuapp.
         NSNumber *difficulty = [self numberFromPossibleNull:[representation valueForKey:@"difficulty"]];
         NSString *photoURL = [representation valueForKeyPath:@"photo.url"];
         
+        [mutablePropertyValues setValue:rid forKey:@"rid"];
         [mutablePropertyValues setValue:name forKey:@"name"];
         [mutablePropertyValues setValue:description forKey:@"recipeDescription"];
         [mutablePropertyValues setValue:instructions forKey:@"instructions"];

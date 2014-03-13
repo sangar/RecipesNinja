@@ -23,11 +23,13 @@
 		C3EAAEBA18D0A8F30097AE02 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3EAAE9E18D0A8F30097AE02 /* CoreData.framework */; };
 		C3EAAEC218D0A8F30097AE02 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C3EAAEC018D0A8F30097AE02 /* InfoPlist.strings */; };
 		C3EAAEC418D0A8F30097AE02 /* RecipesNinjaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EAAEC318D0A8F30097AE02 /* RecipesNinjaTests.m */; };
+		C3ECFA3518D231E6006598FC /* RecipesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3ECFA3418D231E6006598FC /* RecipesTableViewCell.m */; };
+		C3ECFA3E18D235D9006598FC /* _Recipe.m in Sources */ = {isa = PBXBuildFile; fileRef = C3ECFA3D18D235D9006598FC /* _Recipe.m */; };
+		C3ECFA4018D23A74006598FC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3ECFA3F18D23A74006598FC /* QuartzCore.framework */; };
 		C3F76DE318D1A48F00BC5467 /* RecipesAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F76DE218D1A48F00BC5467 /* RecipesAPIClient.m */; };
 		C3F76DEA18D1AAA100BC5467 /* Recipe.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F76DE818D1AAA100BC5467 /* Recipe.m */; };
 		C3F76DEF18D1AD5F00BC5467 /* RecipesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F76DEE18D1AD5F00BC5467 /* RecipesTableViewController.m */; };
 		C3F76DF218D1B20700BC5467 /* RecipesIncrementalStore.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F76DF118D1B20700BC5467 /* RecipesIncrementalStore.m */; };
-		C3F76DF518D1E1AF00BC5467 /* _Recipe.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F76DF418D1E1AF00BC5467 /* _Recipe.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,11 @@
 		C3EAAEBF18D0A8F30097AE02 /* RecipesNinjaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RecipesNinjaTests-Info.plist"; sourceTree = "<group>"; };
 		C3EAAEC118D0A8F30097AE02 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C3EAAEC318D0A8F30097AE02 /* RecipesNinjaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecipesNinjaTests.m; sourceTree = "<group>"; };
+		C3ECFA3318D231E6006598FC /* RecipesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecipesTableViewCell.h; sourceTree = "<group>"; };
+		C3ECFA3418D231E6006598FC /* RecipesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipesTableViewCell.m; sourceTree = "<group>"; };
+		C3ECFA3C18D235D9006598FC /* _Recipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Recipe.h; sourceTree = "<group>"; };
+		C3ECFA3D18D235D9006598FC /* _Recipe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Recipe.m; sourceTree = "<group>"; };
+		C3ECFA3F18D23A74006598FC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C3F76DE118D1A48F00BC5467 /* RecipesAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecipesAPIClient.h; sourceTree = "<group>"; };
 		C3F76DE218D1A48F00BC5467 /* RecipesAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipesAPIClient.m; sourceTree = "<group>"; };
 		C3F76DE718D1AAA100BC5467 /* Recipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recipe.h; sourceTree = "<group>"; };
@@ -69,8 +76,6 @@
 		C3F76DEE18D1AD5F00BC5467 /* RecipesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipesTableViewController.m; sourceTree = "<group>"; };
 		C3F76DF018D1B20700BC5467 /* RecipesIncrementalStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecipesIncrementalStore.h; sourceTree = "<group>"; };
 		C3F76DF118D1B20700BC5467 /* RecipesIncrementalStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipesIncrementalStore.m; sourceTree = "<group>"; };
-		C3F76DF318D1E1AF00BC5467 /* _Recipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Recipe.h; sourceTree = "<group>"; };
-		C3F76DF418D1E1AF00BC5467 /* _Recipe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Recipe.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3ECFA4018D23A74006598FC /* QuartzCore.framework in Frameworks */,
 				C3EAAE9B18D0A8F30097AE02 /* CoreGraphics.framework in Frameworks */,
 				C3EAAE9F18D0A8F30097AE02 /* CoreData.framework in Frameworks */,
 				C3EAAE9D18D0A8F30097AE02 /* UIKit.framework in Frameworks */,
@@ -123,6 +129,7 @@
 		C3EAAE9718D0A8F30097AE02 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C3ECFA3F18D23A74006598FC /* QuartzCore.framework */,
 				C3EAAE9818D0A8F30097AE02 /* Foundation.framework */,
 				C3EAAE9A18D0A8F30097AE02 /* CoreGraphics.framework */,
 				C3EAAE9C18D0A8F30097AE02 /* UIKit.framework */,
@@ -143,6 +150,8 @@
 				C3EAAEAA18D0A8F30097AE02 /* AppDelegate.m */,
 				C3F76DED18D1AD5F00BC5467 /* RecipesTableViewController.h */,
 				C3F76DEE18D1AD5F00BC5467 /* RecipesTableViewController.m */,
+				C3ECFA3318D231E6006598FC /* RecipesTableViewCell.h */,
+				C3ECFA3418D231E6006598FC /* RecipesTableViewCell.m */,
 				C3EAAEAF18D0A8F30097AE02 /* Images.xcassets */,
 				C3EAAEAC18D0A8F30097AE02 /* RecipesNinja.xcdatamodeld */,
 				C3EAAEA118D0A8F30097AE02 /* Supporting Files */,
@@ -193,8 +202,8 @@
 		C3F76DEB18D1AAB000BC5467 /* CoreDataModels */ = {
 			isa = PBXGroup;
 			children = (
-				C3F76DF318D1E1AF00BC5467 /* _Recipe.h */,
-				C3F76DF418D1E1AF00BC5467 /* _Recipe.m */,
+				C3ECFA3C18D235D9006598FC /* _Recipe.h */,
+				C3ECFA3D18D235D9006598FC /* _Recipe.m */,
 			);
 			name = CoreDataModels;
 			sourceTree = "<group>";
@@ -341,10 +350,11 @@
 				C3F76DEA18D1AAA100BC5467 /* Recipe.m in Sources */,
 				C3F76DF218D1B20700BC5467 /* RecipesIncrementalStore.m in Sources */,
 				C3EAAEAB18D0A8F30097AE02 /* AppDelegate.m in Sources */,
-				C3F76DF518D1E1AF00BC5467 /* _Recipe.m in Sources */,
 				C3F76DEF18D1AD5F00BC5467 /* RecipesTableViewController.m in Sources */,
+				C3ECFA3E18D235D9006598FC /* _Recipe.m in Sources */,
 				C3F76DE318D1A48F00BC5467 /* RecipesAPIClient.m in Sources */,
 				C3EAAEAE18D0A8F30097AE02 /* RecipesNinja.xcdatamodeld in Sources */,
+				C3ECFA3518D231E6006598FC /* RecipesTableViewCell.m in Sources */,
 				C3EAAEA718D0A8F30097AE02 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

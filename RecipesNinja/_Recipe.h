@@ -11,6 +11,7 @@ extern const struct RecipeAttributes {
 	__unsafe_unretained NSString *name;
 	__unsafe_unretained NSString *photoURL;
 	__unsafe_unretained NSString *recipeDescription;
+	__unsafe_unretained NSString *rid;
 } RecipeAttributes;
 
 extern const struct RecipeRelationships {
@@ -18,6 +19,7 @@ extern const struct RecipeRelationships {
 
 extern const struct RecipeFetchedProperties {
 } RecipeFetchedProperties;
+
 
 
 
@@ -108,6 +110,20 @@ extern const struct RecipeFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSNumber* rid;
+
+
+
+@property int32_t ridValue;
+- (int32_t)ridValue;
+- (void)setRidValue:(int32_t)value_;
+
+//- (BOOL)validateRid:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
 
 @end
 
@@ -156,6 +172,15 @@ extern const struct RecipeFetchedProperties {
 
 - (NSString*)primitiveRecipeDescription;
 - (void)setPrimitiveRecipeDescription:(NSString*)value;
+
+
+
+
+- (NSNumber*)primitiveRid;
+- (void)setPrimitiveRid:(NSNumber*)value;
+
+- (int32_t)primitiveRidValue;
+- (void)setPrimitiveRidValue:(int32_t)value_;
 
 
 

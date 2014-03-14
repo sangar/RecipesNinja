@@ -14,6 +14,7 @@
 
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UITextField *nameTextField;
+@property (nonatomic, strong) UITextField *descriptionTextField;
 
 @end
 
@@ -38,9 +39,15 @@
         _nameTextField.adjustsFontSizeToFitWidth = YES;
         _nameTextField.userInteractionEnabled = NO;
         
+        _descriptionTextField = [[UITextField alloc] initWithFrame:CGRectMake(130.f, 60.f, 180.f, 60.f)];
+        _descriptionTextField.backgroundColor = [UIColor clearColor];
+        _descriptionTextField.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:22.f];
+        _descriptionTextField.adjustsFontSizeToFitWidth = YES;
+        _descriptionTextField.userInteractionEnabled = NO;
         
         [self.contentView addSubview:_imageView];
         [self.contentView addSubview:_nameTextField];
+        [self.contentView addSubview:_descriptionTextField];
     }
     return self;
 }
@@ -50,6 +57,7 @@
     
     [self.imageView setImageWithURL:[NSURL URLWithString:[recipe valueForKey:@"photoURL"]]];
     self.nameTextField.text = [recipe valueForKey:@"name"];
+    self.descriptionTextField.text = [recipe valueForKey:@"recipeDescription"];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -57,18 +65,14 @@
 
     if (selected) {
         // Configure the view for the selected state
-        [UIView animateWithDuration:0.2
+        [UIView animateWithDuration:0.15
                               delay:0.0
-                            options:UIViewAnimationOptionCurveEaseInOut
+                            options:UIViewAnimationOptionAutoreverse|UIViewAnimationOptionCurveEaseInOut
                          animations:^{
-                             // do whatever animation you want, e.g.,
                              self.transform = CGAffineTransformScale(self.transform, 1.f*.7f, 1.f*.7f);
                          }
                          completion:^(BOOL finished) {
-                             [UIView animateWithDuration:0.2 animations:^{
-                                 
-                                 self.transform = CGAffineTransformScale(self.transform, 1.f/.7f, 1.f/.7f);
-                             }];
+                             self.transform = CGAffineTransformScale(self.transform, 1.f/.7f, 1.f/.7f);
                          }];
     }
 }

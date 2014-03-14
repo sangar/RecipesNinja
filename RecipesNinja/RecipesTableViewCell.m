@@ -14,7 +14,7 @@
 
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UITextField *nameTextField;
-@property (nonatomic, strong) UITextField *descriptionTextField;
+@property (nonatomic, strong) UITextView *descriptionTextField;
 
 @end
 
@@ -39,10 +39,10 @@
         _nameTextField.adjustsFontSizeToFitWidth = YES;
         _nameTextField.userInteractionEnabled = NO;
         
-        _descriptionTextField = [[UITextField alloc] initWithFrame:CGRectMake(130.f, 60.f, 180.f, 60.f)];
+        _descriptionTextField = [[UITextView alloc] initWithFrame:CGRectMake(130.f, 60.f, 180.f, 60.f)];
         _descriptionTextField.backgroundColor = [UIColor clearColor];
         _descriptionTextField.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:22.f];
-        _descriptionTextField.adjustsFontSizeToFitWidth = YES;
+//        _descriptionTextField.adjustsFontSizeToFitWidth = YES;
         _descriptionTextField.userInteractionEnabled = NO;
         
         [self.contentView addSubview:_imageView];
@@ -65,7 +65,7 @@
 
     if (selected) {
         // Configure the view for the selected state
-        [UIView animateWithDuration:0.15
+        [UIView animateWithDuration:0.05
                               delay:0.0
                             options:UIViewAnimationOptionAutoreverse|UIViewAnimationOptionCurveEaseInOut
                          animations:^{

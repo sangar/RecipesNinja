@@ -10,7 +10,7 @@
 #import "RecipesTableViewCell.h"
 #import "Recipe.h"
 
-@interface RecipesTableViewController () <NSFetchedResultsControllerDelegate>
+@interface RecipesTableViewController () <NSFetchedResultsControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
@@ -93,6 +93,19 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
     NSLog(@"%@", recipe);
     
     
+}
+
+
+#pragma mark -
+#pragma mark - UIViewController delegate methods
+
+- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC
+{
+    if (operation == UINavigationControllerOperationPush) {
+        
+    }
+    
+    return nil;
 }
 
 

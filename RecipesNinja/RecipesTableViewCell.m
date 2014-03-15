@@ -33,10 +33,10 @@
         _imageView.layer.cornerRadius = 60.f;
         _imageView.layer.masksToBounds = YES;
         
-        _nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(130.f, 10.f, 180.f, 50.f)];
+        _nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(115.f, -5.f, 200.f, 50.f)];
         _nameTextField.backgroundColor = [UIColor clearColor];
         _nameTextField.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:26.f];
-        _nameTextField.adjustsFontSizeToFitWidth = YES;
+//        _nameTextField.adjustsFontSizeToFitWidth = YES;
         _nameTextField.userInteractionEnabled = NO;
         
         _descriptionTextField = [[UITextView alloc] initWithFrame:CGRectMake(130.f, 60.f, 180.f, 60.f)];
@@ -55,7 +55,7 @@
 - (void)setRecipe:(Recipe *)recipe {
     _recipe = recipe;
     
-    [self.imageView setImageWithURL:[NSURL URLWithString:[recipe valueForKey:@"photoURL"]]];
+    [self.imageView setImageWithURL:[NSURL URLWithString:[recipe valueForKey:@"photoURL"]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
     self.nameTextField.text = [recipe valueForKey:@"name"];
     self.descriptionTextField.text = [recipe valueForKey:@"recipeDescription"];
 }
@@ -65,14 +65,16 @@
 
     if (selected) {
         // Configure the view for the selected state
-        [UIView animateWithDuration:0.05
+        [UIView animateWithDuration:0.1
                               delay:0.0
                             options:UIViewAnimationOptionAutoreverse|UIViewAnimationOptionCurveEaseInOut
                          animations:^{
-                             self.transform = CGAffineTransformScale(self.transform, 1.f*.7f, 1.f*.7f);
+                             self.transform = CGAffineTransformScale(self.transform, 1.f*.9f, 1.f*.9f);
                          }
                          completion:^(BOOL finished) {
-                             self.transform = CGAffineTransformScale(self.transform, 1.f/.7f, 1.f/.7f);
+                             if (finished) {
+                                 self.transform = CGAffineTransformScale(self.transform, 1.f/.9f, 1.f/.9f);
+                             }
                          }];
     }
 }

@@ -56,8 +56,8 @@
     _recipe = recipe;
     
     [self.imageView setImageWithURL:[NSURL URLWithString:[recipe valueForKey:@"photoURL"]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
-    self.nameTextField.text = [recipe valueForKey:@"name"];
-    self.descriptionTextField.text = [recipe valueForKey:@"recipeDescription"];
+    self.nameTextField.text = [recipe name];
+    self.descriptionTextField.text = [recipe recipeDescription];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

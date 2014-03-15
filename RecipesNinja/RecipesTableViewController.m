@@ -9,6 +9,7 @@
 #import "RecipesTableViewController.h"
 #import "RecipesTableViewCell.h"
 #import "Recipe.h"
+#import "RecipeDetailViewController.h"
 
 @interface RecipesTableViewController () <NSFetchedResultsControllerDelegate, UINavigationControllerDelegate>
 
@@ -90,8 +91,11 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
     
     Recipe *recipe = (Recipe *) [_fetchedResultsController objectAtIndexPath:indexPath];
     
-    NSLog(@"%@", recipe);
     
+    RecipeDetailViewController *rdvc = [[RecipeDetailViewController alloc] initWithStyle:UITableViewStylePlain];
+    rdvc.recipe = recipe;
+    
+    [self.navigationController pushViewController:rdvc animated:YES];
     
 }
 

@@ -124,8 +124,9 @@
     
     AFIncrementalStore *incrementalStore = (AFIncrementalStore *)[_persistentStoreCoordinator addPersistentStoreWithType:[RecipesIncrementalStore type] configuration:nil URL:nil options:nil error:nil];
     
+    NSDictionary *options = @{NSInferMappingModelAutomaticallyOption:@(YES), NSMigratePersistentStoresAutomaticallyOption:@(YES)};
     
-    if (![incrementalStore.backingPersistentStoreCoordinator addPersistentStoreWithType:NSInMemoryStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+    if (![incrementalStore.backingPersistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
         /*
          Replace this implementation with code to handle the error appropriately.
          

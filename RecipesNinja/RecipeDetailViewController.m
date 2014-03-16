@@ -43,6 +43,8 @@ static NSString * const ReuseIdentifier = @"ReuseIdentifier";
     
     self.title = [_recipe name];
     
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:ReuseIdentifier];
 }
 
@@ -57,15 +59,15 @@ static NSString * const ReuseIdentifier = @"ReuseIdentifier";
 #pragma mark - Table view delegate methods
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 300.f;
+    return 200.f;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
     UITableViewHeaderFooterView *headerView = [[UITableViewHeaderFooterView alloc] initWithReuseIdentifier:@"HeaderReuser"];
     
-    UIImageView *headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.f, 10.f, 280.f, 280.f)];
-    headerImageView.layer.cornerRadius = 140.f;
+    UIImageView *headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.f, 10.f, 180.f, 180.f)];
+    headerImageView.layer.cornerRadius = 90.f;
     headerImageView.layer.masksToBounds = YES;
     [headerImageView setImageWithURL:[NSURL URLWithString:[_recipe photoURL]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
     

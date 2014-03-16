@@ -1,5 +1,5 @@
 #import "Recipe.h"
-
+#import "CoreDataHelper.h"
 
 @interface Recipe ()
 
@@ -10,6 +10,17 @@
 
 @implementation Recipe
 
-// Custom logic goes here.
+- (BOOL)setAsFavorite:(BOOL)favorite {
+    [self setFavoriteValue:favorite];
+    return [self save];
+}
+
+- (BOOL)isFavorite {
+    return [self favorite];
+}
+
+- (BOOL)save {
+    return [CoreDataHelper saveContext];
+}
 
 @end

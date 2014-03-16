@@ -90,7 +90,9 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     Recipe *recipe = (Recipe *) [_fetchedResultsController objectAtIndexPath:indexPath];
-    
+    if ([recipe setAsFavorite:YES]) {
+        NSLog(@"Recipe set as favorite: %@", [recipe rid]);
+    }
     
     RecipeDetailViewController *rdvc = [[RecipeDetailViewController alloc] initWithStyle:UITableViewStylePlain];
     rdvc.recipe = recipe;

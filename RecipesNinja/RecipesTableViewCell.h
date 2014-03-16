@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MCSwipeTableViewCell.h"
 #import "Recipe.h"
 
-@interface RecipesTableViewCell : UITableViewCell
+@interface RecipesTableViewCell : MCSwipeTableViewCell
 
 @property (nonatomic, strong) Recipe *recipe;
 

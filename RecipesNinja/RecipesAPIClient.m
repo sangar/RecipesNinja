@@ -34,6 +34,13 @@ static NSString * const kRecipesAPIURLString = @"http://hyper-recipes.herokuapp.
     return self;
 }
 
+//- (id)representationOrArrayOfRepresentationsFromResponseObject:(id)responseObject {
+//    
+//    NSLog(@"responseObject: %@", responseObject);
+//    
+//    return [responseObject valueForKey:@"recipe"];
+//}
+
 - (NSNumber *)numberFromPossibleNull:(id)value {
     
     if ([value isKindOfClass:[NSNull class]]) {
@@ -75,17 +82,17 @@ static NSString * const kRecipesAPIURLString = @"http://hyper-recipes.herokuapp.
     return mutablePropertyValues;
 }
 
-- (BOOL)shouldFetchRemoteAttributeValuesForObjectWithID:(NSManagedObjectID *)objectID
-                                 inManagedObjectContext:(NSManagedObjectContext *)context
-{
-    return [[[objectID entity] name] isEqualToString:@"Recipe"];
-}
-
-- (BOOL)shouldFetchRemoteValuesForRelationship:(NSRelationshipDescription *)relationship
-                               forObjectWithID:(NSManagedObjectID *)objectID
-                        inManagedObjectContext:(NSManagedObjectContext *)context
-{
-    return [[[objectID entity] name] isEqualToString:@"Recipe"];
-}
+//- (BOOL)shouldFetchRemoteAttributeValuesForObjectWithID:(NSManagedObjectID *)objectID
+//                                 inManagedObjectContext:(NSManagedObjectContext *)context
+//{
+//    return YES; // [[[objectID entity] name] isEqualToString:@"Recipe"];
+//}
+//
+//- (BOOL)shouldFetchRemoteValuesForRelationship:(NSRelationshipDescription *)relationship
+//                               forObjectWithID:(NSManagedObjectID *)objectID
+//                        inManagedObjectContext:(NSManagedObjectContext *)context
+//{
+//    return YES; // [[[objectID entity] name] isEqualToString:@"Recipe"];
+//}
 
 @end

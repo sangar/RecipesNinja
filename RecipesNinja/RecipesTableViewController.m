@@ -11,9 +11,11 @@
 #import "Recipe.h"
 #import "RecipeDetailViewController.h"
 
-@interface RecipesTableViewController () <NSFetchedResultsControllerDelegate, UINavigationControllerDelegate>
+@interface RecipesTableViewController () <NSFetchedResultsControllerDelegate, UINavigationControllerDelegate, MCSwipeTableViewCellDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+
+- (UIView *)viewWithImageName:(NSString *)imageName;
 
 @end
 
@@ -71,12 +73,32 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     RecipesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
+    cell.defaultColor = [UIColor colorWithWhite:.95f alpha:1.f];
     
     // Configure the cell...
-    cell.recipe = (Recipe *) [_fetchedResultsController objectAtIndexPath:indexPath];
+    Recipe *recipe = (Recipe *) [_fetchedResultsController objectAtIndexPath:indexPath];
+    cell.recipe = recipe;
     
+    UIView *checkView = [self viewWithImageName:@"star"];
+    UIColor *color = [UIColor colorWithRed:254.0 / 255.0 green:217.0 / 255.0 blue:56.0 / 255.0 alpha:1.0];
+    if ([recipe favoriteValue]) {
+        color = [UIColor colorWithRed:232.0 / 255.0 green:61.0 / 255.0 blue:14.0 / 255.0 alpha:1.0];
+    }
+
+    [cell setSwipeGestureWithView:checkView color:color mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
+        
+        [recipe setFavoriteValue:![recipe favoriteValue]];
+        
+    }];
     
     return cell;
+}
+
+- (UIView *)viewWithImageName:(NSString *)imageName {
+    UIImage *image = [UIImage imageNamed:imageName];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    imageView.contentMode = UIViewContentModeCenter;
+    return imageView;
 }
 
 
@@ -90,9 +112,6 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     Recipe *recipe = (Recipe *) [_fetchedResultsController objectAtIndexPath:indexPath];
-    if ([recipe setAsFavorite:YES]) {
-        NSLog(@"Recipe set as favorite: %@", [recipe rid]);
-    }
     
     RecipeDetailViewController *rdvc = [[RecipeDetailViewController alloc] initWithStyle:UITableViewStylePlain];
     rdvc.recipe = recipe;

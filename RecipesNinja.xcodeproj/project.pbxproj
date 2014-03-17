@@ -29,10 +29,10 @@
 		C3ECFA3E18D235D9006598FC /* _Recipe.m in Sources */ = {isa = PBXBuildFile; fileRef = C3ECFA3D18D235D9006598FC /* _Recipe.m */; };
 		C3ECFA4018D23A74006598FC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3ECFA3F18D23A74006598FC /* QuartzCore.framework */; };
 		C3ECFA4218D25F7F006598FC /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C3ECFA4118D25F7F006598FC /* README.md */; };
-		C3F76DE318D1A48F00BC5467 /* RecipesAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F76DE218D1A48F00BC5467 /* RecipesAPIClient.m */; };
+		C3F2A17518D70BFF00D94029 /* NumberHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F2A17418D70BFF00D94029 /* NumberHelper.m */; };
+		C3F76DE318D1A48F00BC5467 /* HyperAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F76DE218D1A48F00BC5467 /* HyperAPIClient.m */; };
 		C3F76DEA18D1AAA100BC5467 /* Recipe.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F76DE818D1AAA100BC5467 /* Recipe.m */; };
 		C3F76DEF18D1AD5F00BC5467 /* RecipesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F76DEE18D1AD5F00BC5467 /* RecipesTableViewController.m */; };
-		C3F76DF218D1B20700BC5467 /* RecipesIncrementalStore.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F76DF118D1B20700BC5467 /* RecipesIncrementalStore.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,14 +76,14 @@
 		C3ECFA3D18D235D9006598FC /* _Recipe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Recipe.m; sourceTree = "<group>"; };
 		C3ECFA3F18D23A74006598FC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C3ECFA4118D25F7F006598FC /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
-		C3F76DE118D1A48F00BC5467 /* RecipesAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecipesAPIClient.h; sourceTree = "<group>"; };
-		C3F76DE218D1A48F00BC5467 /* RecipesAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipesAPIClient.m; sourceTree = "<group>"; };
+		C3F2A17318D70BFF00D94029 /* NumberHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumberHelper.h; sourceTree = "<group>"; };
+		C3F2A17418D70BFF00D94029 /* NumberHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumberHelper.m; sourceTree = "<group>"; };
+		C3F76DE118D1A48F00BC5467 /* HyperAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyperAPIClient.h; sourceTree = "<group>"; };
+		C3F76DE218D1A48F00BC5467 /* HyperAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyperAPIClient.m; sourceTree = "<group>"; };
 		C3F76DE718D1AAA100BC5467 /* Recipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recipe.h; sourceTree = "<group>"; };
 		C3F76DE818D1AAA100BC5467 /* Recipe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Recipe.m; sourceTree = "<group>"; };
 		C3F76DED18D1AD5F00BC5467 /* RecipesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecipesTableViewController.h; sourceTree = "<group>"; };
 		C3F76DEE18D1AD5F00BC5467 /* RecipesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipesTableViewController.m; sourceTree = "<group>"; };
-		C3F76DF018D1B20700BC5467 /* RecipesIncrementalStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecipesIncrementalStore.h; sourceTree = "<group>"; };
-		C3F76DF118D1B20700BC5467 /* RecipesIncrementalStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipesIncrementalStore.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +119,8 @@
 			children = (
 				C356D2CB18D5BDD80015DE2A /* CoreDataHelper.h */,
 				C356D2CC18D5BDD80015DE2A /* CoreDataHelper.m */,
+				C3F2A17318D70BFF00D94029 /* NumberHelper.h */,
+				C3F2A17418D70BFF00D94029 /* NumberHelper.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -161,9 +163,9 @@
 			isa = PBXGroup;
 			children = (
 				C3F76DE418D1A49B00BC5467 /* AFNetworking */,
+				C356D2CA18D5BDBA0015DE2A /* Helpers */,
 				C3F76DEB18D1AAB000BC5467 /* CoreDataModels */,
 				C3F76DEC18D1AAC000BC5467 /* Models */,
-				C356D2CA18D5BDBA0015DE2A /* Helpers */,
 				C3EAAEA918D0A8F30097AE02 /* AppDelegate.h */,
 				C3EAAEAA18D0A8F30097AE02 /* AppDelegate.m */,
 				C3F76DED18D1AD5F00BC5467 /* RecipesTableViewController.h */,
@@ -212,10 +214,8 @@
 		C3F76DE418D1A49B00BC5467 /* AFNetworking */ = {
 			isa = PBXGroup;
 			children = (
-				C3F76DE118D1A48F00BC5467 /* RecipesAPIClient.h */,
-				C3F76DE218D1A48F00BC5467 /* RecipesAPIClient.m */,
-				C3F76DF018D1B20700BC5467 /* RecipesIncrementalStore.h */,
-				C3F76DF118D1B20700BC5467 /* RecipesIncrementalStore.m */,
+				C3F76DE118D1A48F00BC5467 /* HyperAPIClient.h */,
+				C3F76DE218D1A48F00BC5467 /* HyperAPIClient.m */,
 			);
 			name = AFNetworking;
 			sourceTree = "<group>";
@@ -369,12 +369,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3F2A17518D70BFF00D94029 /* NumberHelper.m in Sources */,
 				C3F76DEA18D1AAA100BC5467 /* Recipe.m in Sources */,
-				C3F76DF218D1B20700BC5467 /* RecipesIncrementalStore.m in Sources */,
 				C3EAAEAB18D0A8F30097AE02 /* AppDelegate.m in Sources */,
 				C3F76DEF18D1AD5F00BC5467 /* RecipesTableViewController.m in Sources */,
 				C3ECFA3E18D235D9006598FC /* _Recipe.m in Sources */,
-				C3F76DE318D1A48F00BC5467 /* RecipesAPIClient.m in Sources */,
+				C3F76DE318D1A48F00BC5467 /* HyperAPIClient.m in Sources */,
 				C3EAAEAE18D0A8F30097AE02 /* RecipesNinja.xcdatamodeld in Sources */,
 				C356D2CD18D5BDD80015DE2A /* CoreDataHelper.m in Sources */,
 				C3ECFA3518D231E6006598FC /* RecipesTableViewCell.m in Sources */,

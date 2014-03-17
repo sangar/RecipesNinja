@@ -10,6 +10,7 @@
 
 @interface CoreDataHelper : NSObject
 
++ (NSManagedObjectContext *)managedObjectContext;
 + (BOOL)saveContext;
 
 @end

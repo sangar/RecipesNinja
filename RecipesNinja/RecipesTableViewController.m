@@ -10,6 +10,7 @@
 #import "RecipesTableViewCell.h"
 #import "Recipe.h"
 #import "RecipeDetailViewController.h"
+#import "UIAlertView+AFNetworking.h"
 
 @interface RecipesTableViewController () <NSFetchedResultsControllerDelegate, UINavigationControllerDelegate, MCSwipeTableViewCellDelegate>
 
@@ -25,8 +26,14 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
 @implementation RecipesTableViewController
 
 - (void)reloadData {
-    _fetchedResultsController.fetchRequest.resultType = NSManagedObjectResultType;
-    [_fetchedResultsController performFetch:nil];
+    NSURLSessionTask *task = [Recipe allRecipesWithBlock:^(NSArray *recipes, NSError *error) {
+        if (!error) {
+            _fetchedResultsController.fetchRequest.resultType = NSManagedObjectResultType;
+            [_fetchedResultsController performFetch:nil];
+        }
+    }];
+    
+    [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
 }
 
 - (void)viewDidLoad
@@ -35,18 +42,21 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
     
     self.title = NSLocalizedString(@"Recipes", nil);
     
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Recipe"];
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:[Recipe entityName]];
     fetchRequest.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"rid" ascending:YES selector:@selector(compare:)]];
     fetchRequest.returnsObjectsAsFaults = NO;
     
     _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[(id)[[UIApplication sharedApplication] delegate] managedObjectContext] sectionNameKeyPath:nil cacheName:nil];
     _fetchedResultsController.delegate = self;
     [_fetchedResultsController performFetch:nil];
+
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reloadData)];
     
     
     [self.tableView registerClass:[RecipesTableViewCell class] forCellReuseIdentifier:reuseIdentifier];
+    
+    [self reloadData];
 }
 
 - (void)didReceiveMemoryWarning

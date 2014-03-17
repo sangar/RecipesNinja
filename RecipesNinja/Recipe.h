@@ -2,7 +2,9 @@
 
 @interface Recipe : _Recipe {}
 
-// Custom logic goes here.
++ (Recipe *)recipeFromAttributes:(NSDictionary *)attributes;
+
++ (NSURLSessionDataTask *)allRecipesWithBlock:(void (^)(NSArray *recipes, NSError *error))block;
 
 - (BOOL)setAsFavorite:(BOOL)favorite;
 - (BOOL)isFavorite;

@@ -11,6 +11,11 @@
 
 @implementation CoreDataHelper
 
++ (NSManagedObjectContext *)managedObjectContext {
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    return appDelegate.managedObjectContext;
+}
+
 + (BOOL)saveContext {
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     return [appDelegate saveContext];

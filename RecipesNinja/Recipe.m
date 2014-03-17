@@ -4,6 +4,8 @@
 #import "NumberHelper.h"
 #import "DateHelper.h"
 #import "StringHelper.h"
+#import "UIImageView+AFNetworking.h"
+
 
 @interface Recipe ()
 
@@ -20,7 +22,6 @@
 + (Recipe *)recipeFromAttributes:(NSDictionary *)attributes {
     
     NSManagedObjectContext *context = [CoreDataHelper managedObjectContext];
-    
     
     NSNumber *rid = [NumberHelper numberFromPossibleNull:[attributes valueForKey:@"id"]];
     NSDate *updatedAt = [DateHelper ISO8601StringToDate:[attributes valueForKey:@"updated_at"]];
@@ -47,7 +48,7 @@
 
 #pragma mark - Network methods
 
-+ (NSURLSessionDataTask *)allRecipesWithBlock:(void (^)(NSArray *recipes, NSError *error))block {
++ (NSURLSessionDataTask *)allWithBlock:(void (^)(NSArray *recipes, NSError *error))block {
     return [[HyperAPIClient sharedClient] GET:@"recipes" parameters:nil success:^(NSURLSessionDataTask * __unused task, id JSON) {
         
         NSArray *recipesFromResponse = JSON;
@@ -93,11 +94,9 @@
     NSString *URLPath = [NSString stringWithFormat:@"recipes/%d", self.ridValue];
     NSDictionary *params = [self parameters];
     
-    NSLog(@"PUT: %@, params: %@", URLPath, params);
-    
     return [[HyperAPIClient sharedClient] PUT:URLPath parameters:params success:^(NSURLSessionDataTask *task, id responseObject) {
         
-        NSLog(@"Update response: %@", responseObject);
+        // TODO: send multipart with image
         
         if (block) {
             block(YES, nil);
@@ -142,6 +141,20 @@
 
 #pragma mark - Set values
 
+- (void)setPhotoInImageView:(UIImageView *)imageView {
+    if (!self.photo) {
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[self valueForKey:@"photoURL"]]];
+        [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
+        
+        [imageView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"placeholder"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+            self.photo = UIImageJPEGRepresentation(image, 0.0f);
+            [self save];
+        } failure:nil];
+    } else {
+        imageView.image = [UIImage imageWithData:self.photo];
+    }
+}
+
 - (void)setAttributes:(NSDictionary *)attributes {
     self.rid = [NumberHelper numberFromPossibleNull:[attributes valueForKey:@"id"]];
     
@@ -164,7 +177,7 @@
 }
 
 - (BOOL)isFavorite {
-    return [self favorite];
+    return [self favoriteValue];
 }
 
 - (BOOL)save {

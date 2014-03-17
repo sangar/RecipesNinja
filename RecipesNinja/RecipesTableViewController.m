@@ -11,6 +11,7 @@
 #import "Recipe.h"
 #import "RecipeDetailViewController.h"
 #import "UIAlertView+AFNetworking.h"
+#import "GSProgressHUD.h"
 
 @interface RecipesTableViewController () <NSFetchedResultsControllerDelegate, UINavigationControllerDelegate, MCSwipeTableViewCellDelegate>
 
@@ -26,10 +27,14 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
 @implementation RecipesTableViewController
 
 - (void)reloadData {
+    [GSProgressHUD show];
+    
     _fetchedResultsController.fetchRequest.resultType = NSManagedObjectResultType;
     [_fetchedResultsController performFetch:nil];
     
-    NSURLSessionTask *task = [Recipe allRecipesWithBlock:^(NSArray *recipes, NSError *error) {
+    NSURLSessionTask *task = [Recipe allWithBlock:^(NSArray *recipes, NSError *error) {
+        [GSProgressHUD dismiss];
+        
         if (!error) {
             _fetchedResultsController.fetchRequest.resultType = NSManagedObjectResultType;
             [_fetchedResultsController performFetch:nil];
@@ -101,13 +106,15 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
     [cell setSwipeGestureWithView:checkView color:color mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
         
         recipe.favoriteValue = ![recipe favoriteValue];
+        [GSProgressHUD popImage:[UIImage imageNamed:@"star"] withStatus:recipe.favoriteValue ? NSLocalizedString(@"Favorite", nil) : NSLocalizedString(@"NOT", nil)];
+        
         NSURLSessionDataTask *task = [recipe updateWithBlock:^(BOOL updated, NSError *error) {
             if (!error) {
                 [recipe save];
+                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             }
         }];
         [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
-        
     }];
     
     return cell;

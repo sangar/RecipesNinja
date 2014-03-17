@@ -7,7 +7,6 @@
 //
 
 #import "RecipesTableViewCell.h"
-#import "UIImageView+AFNetworking.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface RecipesTableViewCell ()
@@ -15,6 +14,7 @@
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UITextField *nameTextField;
 @property (nonatomic, strong) UITextView *descriptionTextField;
+@property (nonatomic, strong) UIImageView *favImageView;
 
 @end
 
@@ -33,21 +33,26 @@
         _imageView.layer.cornerRadius = 60.f;
         _imageView.layer.masksToBounds = YES;
         
-        _nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(115.f, -5.f, 200.f, 50.f)];
+        _nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(115.f, 10.f, 200.f, 25.f)];
         _nameTextField.backgroundColor = [UIColor clearColor];
-        _nameTextField.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:26.f];
+        _nameTextField.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:22.f];
 //        _nameTextField.adjustsFontSizeToFitWidth = YES;
         _nameTextField.userInteractionEnabled = NO;
         
-        _descriptionTextField = [[UITextView alloc] initWithFrame:CGRectMake(130.f, 60.f, 180.f, 60.f)];
+        _descriptionTextField = [[UITextView alloc] initWithFrame:CGRectMake(130.f, 30.f, 180.f, 70.f)];
         _descriptionTextField.backgroundColor = [UIColor clearColor];
-        _descriptionTextField.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:22.f];
+        _descriptionTextField.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:18.f];
 //        _descriptionTextField.adjustsFontSizeToFitWidth = YES;
         _descriptionTextField.userInteractionEnabled = NO;
+        
+        _favImageView = [[UIImageView alloc] initWithFrame:CGRectMake(285.f, 105.f, 25.f, 25.f)];
+        _favImageView.image = [[UIImage imageNamed:@"star"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        _favImageView.tintColor = [UIColor yellowColor];
         
         [self.contentView addSubview:_imageView];
         [self.contentView addSubview:_nameTextField];
         [self.contentView addSubview:_descriptionTextField];
+        [self.contentView addSubview:_favImageView];
     }
     return self;
 }
@@ -55,9 +60,17 @@
 - (void)setRecipe:(Recipe *)recipe {
     _recipe = recipe;
         
-    [self.imageView setImageWithURL:[NSURL URLWithString:[recipe valueForKey:@"photoURL"]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+//    [self.imageView setImageWithURL:[NSURL URLWithString:[recipe valueForKey:@"photoURL"]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+    
+    
+    [recipe setPhotoInImageView:self.imageView];
     self.nameTextField.text = [recipe name];
     self.descriptionTextField.text = [recipe recipeDescription];
+    if ([recipe isFavorite]) {
+        _favImageView.alpha = 1.f;
+    } else {
+        _favImageView.alpha = 0.f;
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

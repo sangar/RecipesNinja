@@ -7,7 +7,6 @@
 //
 
 #import "RecipeDetailViewController.h"
-#import "UIImageView+AFNetworking.h"
 
 @interface RecipeDetailViewController ()
 
@@ -16,7 +15,9 @@
 @end
 
 
-static NSString * const ReuseIdentifier = @"ReuseIdentifier";
+static NSString * const HeaderImageIdentifier = @"HeaderImageIdentifier";
+static NSString * const TextViewIdentifier = @"TextViewIdentifier";
+static NSString * const AttributesIdentifier = @"AttributesIdentifier";
 
 @implementation RecipeDetailViewController
 
@@ -39,13 +40,13 @@ static NSString * const ReuseIdentifier = @"ReuseIdentifier";
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    _fields = @[@"name", @"desc"];
+    _fields = @[@"name", @"desc", @"instr"];
     
     self.title = [_recipe name];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:ReuseIdentifier];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:TextViewIdentifier];
 }
 
 - (void)didReceiveMemoryWarning
@@ -64,14 +65,14 @@ static NSString * const ReuseIdentifier = @"ReuseIdentifier";
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
-    UITableViewHeaderFooterView *headerView = [[UITableViewHeaderFooterView alloc] initWithReuseIdentifier:@"HeaderReuser"];
+    UITableViewHeaderFooterView *headerView = [[UITableViewHeaderFooterView alloc] initWithReuseIdentifier:HeaderImageIdentifier];
     
     UIImageView *headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.f, 10.f, 180.f, 180.f)];
     headerImageView.layer.cornerRadius = 90.f;
     headerImageView.layer.masksToBounds = YES;
-    [headerImageView setImageWithURL:[NSURL URLWithString:[_recipe photoURL]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
-    
     headerImageView.center = CGPointMake(160.f, headerImageView.center.y);
+    
+    [_recipe setPhotoInImageView:headerImageView];
     
     [headerView addSubview:headerImageView];
     
@@ -94,10 +95,17 @@ static NSString * const ReuseIdentifier = @"ReuseIdentifier";
     return [_fields count];
 }
 
+- (NSString *)identifierForIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.row) {
+        case 0:
+            break;
+    }
+    return TextViewIdentifier;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ReuseIdentifier forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[self identifierForIndexPath:indexPath] forIndexPath:indexPath];
     
     cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:22.f];
     
@@ -108,6 +116,9 @@ static NSString * const ReuseIdentifier = @"ReuseIdentifier";
             break;
         case 1:
             cell.textLabel.text = [_recipe recipeDescription];
+            break;
+        case 2:
+            cell.textLabel.text = [_recipe instructions];
             break;
     }
     

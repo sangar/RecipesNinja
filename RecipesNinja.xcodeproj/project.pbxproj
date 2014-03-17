@@ -26,10 +26,12 @@
 		C3EAAEC218D0A8F30097AE02 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C3EAAEC018D0A8F30097AE02 /* InfoPlist.strings */; };
 		C3EAAEC418D0A8F30097AE02 /* RecipesNinjaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EAAEC318D0A8F30097AE02 /* RecipesNinjaTests.m */; };
 		C3ECFA3518D231E6006598FC /* RecipesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3ECFA3418D231E6006598FC /* RecipesTableViewCell.m */; };
-		C3ECFA3E18D235D9006598FC /* _Recipe.m in Sources */ = {isa = PBXBuildFile; fileRef = C3ECFA3D18D235D9006598FC /* _Recipe.m */; };
 		C3ECFA4018D23A74006598FC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3ECFA3F18D23A74006598FC /* QuartzCore.framework */; };
 		C3ECFA4218D25F7F006598FC /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C3ECFA4118D25F7F006598FC /* README.md */; };
 		C3F2A17518D70BFF00D94029 /* NumberHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F2A17418D70BFF00D94029 /* NumberHelper.m */; };
+		C3F2A17818D73A4F00D94029 /* _Recipe.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F2A17718D73A4F00D94029 /* _Recipe.m */; };
+		C3F2A17B18D73C3F00D94029 /* DateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F2A17A18D73C3F00D94029 /* DateHelper.m */; };
+		C3F2A17E18D73D5C00D94029 /* StringHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F2A17D18D73D5C00D94029 /* StringHelper.m */; };
 		C3F76DE318D1A48F00BC5467 /* HyperAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F76DE218D1A48F00BC5467 /* HyperAPIClient.m */; };
 		C3F76DEA18D1AAA100BC5467 /* Recipe.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F76DE818D1AAA100BC5467 /* Recipe.m */; };
 		C3F76DEF18D1AD5F00BC5467 /* RecipesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3F76DEE18D1AD5F00BC5467 /* RecipesTableViewController.m */; };
@@ -72,12 +74,16 @@
 		C3EAAEC318D0A8F30097AE02 /* RecipesNinjaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecipesNinjaTests.m; sourceTree = "<group>"; };
 		C3ECFA3318D231E6006598FC /* RecipesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecipesTableViewCell.h; sourceTree = "<group>"; };
 		C3ECFA3418D231E6006598FC /* RecipesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipesTableViewCell.m; sourceTree = "<group>"; };
-		C3ECFA3C18D235D9006598FC /* _Recipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Recipe.h; sourceTree = "<group>"; };
-		C3ECFA3D18D235D9006598FC /* _Recipe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Recipe.m; sourceTree = "<group>"; };
 		C3ECFA3F18D23A74006598FC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C3ECFA4118D25F7F006598FC /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
 		C3F2A17318D70BFF00D94029 /* NumberHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumberHelper.h; sourceTree = "<group>"; };
 		C3F2A17418D70BFF00D94029 /* NumberHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumberHelper.m; sourceTree = "<group>"; };
+		C3F2A17618D73A4F00D94029 /* _Recipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Recipe.h; sourceTree = "<group>"; };
+		C3F2A17718D73A4F00D94029 /* _Recipe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Recipe.m; sourceTree = "<group>"; };
+		C3F2A17918D73C3F00D94029 /* DateHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateHelper.h; sourceTree = "<group>"; };
+		C3F2A17A18D73C3F00D94029 /* DateHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateHelper.m; sourceTree = "<group>"; };
+		C3F2A17C18D73D5C00D94029 /* StringHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringHelper.h; sourceTree = "<group>"; };
+		C3F2A17D18D73D5C00D94029 /* StringHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringHelper.m; sourceTree = "<group>"; };
 		C3F76DE118D1A48F00BC5467 /* HyperAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyperAPIClient.h; sourceTree = "<group>"; };
 		C3F76DE218D1A48F00BC5467 /* HyperAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyperAPIClient.m; sourceTree = "<group>"; };
 		C3F76DE718D1AAA100BC5467 /* Recipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recipe.h; sourceTree = "<group>"; };
@@ -121,6 +127,10 @@
 				C356D2CC18D5BDD80015DE2A /* CoreDataHelper.m */,
 				C3F2A17318D70BFF00D94029 /* NumberHelper.h */,
 				C3F2A17418D70BFF00D94029 /* NumberHelper.m */,
+				C3F2A17918D73C3F00D94029 /* DateHelper.h */,
+				C3F2A17A18D73C3F00D94029 /* DateHelper.m */,
+				C3F2A17C18D73D5C00D94029 /* StringHelper.h */,
+				C3F2A17D18D73D5C00D94029 /* StringHelper.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -223,8 +233,8 @@
 		C3F76DEB18D1AAB000BC5467 /* CoreDataModels */ = {
 			isa = PBXGroup;
 			children = (
-				C3ECFA3C18D235D9006598FC /* _Recipe.h */,
-				C3ECFA3D18D235D9006598FC /* _Recipe.m */,
+				C3F2A17618D73A4F00D94029 /* _Recipe.h */,
+				C3F2A17718D73A4F00D94029 /* _Recipe.m */,
 			);
 			name = CoreDataModels;
 			sourceTree = "<group>";
@@ -373,9 +383,11 @@
 				C3F76DEA18D1AAA100BC5467 /* Recipe.m in Sources */,
 				C3EAAEAB18D0A8F30097AE02 /* AppDelegate.m in Sources */,
 				C3F76DEF18D1AD5F00BC5467 /* RecipesTableViewController.m in Sources */,
-				C3ECFA3E18D235D9006598FC /* _Recipe.m in Sources */,
 				C3F76DE318D1A48F00BC5467 /* HyperAPIClient.m in Sources */,
+				C3F2A17B18D73C3F00D94029 /* DateHelper.m in Sources */,
 				C3EAAEAE18D0A8F30097AE02 /* RecipesNinja.xcdatamodeld in Sources */,
+				C3F2A17818D73A4F00D94029 /* _Recipe.m in Sources */,
+				C3F2A17E18D73D5C00D94029 /* StringHelper.m in Sources */,
 				C356D2CD18D5BDD80015DE2A /* CoreDataHelper.m in Sources */,
 				C3ECFA3518D231E6006598FC /* RecipesTableViewCell.m in Sources */,
 				C3EAAEA718D0A8F30097AE02 /* main.m in Sources */,

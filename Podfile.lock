@@ -19,13 +19,16 @@ PODS:
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - MCSwipeTableViewCell (2.1.0)
+  - TransformerKit (0.3.1)
 
 DEPENDENCIES:
   - AFNetworking
   - MCSwipeTableViewCell (~> 2.1)
+  - TransformerKit (~> 0.3)
 
 SPEC CHECKSUMS:
   AFNetworking: 0121f4b69be3fa58d1ab317866e036e12ac9651d
   MCSwipeTableViewCell: 4a26851568843d15340eeca00210c219aa9f76d5
+  TransformerKit: 612d3966b31e345f2abc8221fe6657379bb5d8b6
 
 COCOAPODS: 0.29.0

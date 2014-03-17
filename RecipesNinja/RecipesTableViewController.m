@@ -26,6 +26,9 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
 @implementation RecipesTableViewController
 
 - (void)reloadData {
+    _fetchedResultsController.fetchRequest.resultType = NSManagedObjectResultType;
+    [_fetchedResultsController performFetch:nil];
+    
     NSURLSessionTask *task = [Recipe allRecipesWithBlock:^(NSArray *recipes, NSError *error) {
         if (!error) {
             _fetchedResultsController.fetchRequest.resultType = NSManagedObjectResultType;
@@ -97,7 +100,13 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
 
     [cell setSwipeGestureWithView:checkView color:color mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
         
-        [recipe setFavoriteValue:![recipe favoriteValue]];
+        recipe.favoriteValue = ![recipe favoriteValue];
+        NSURLSessionDataTask *task = [recipe updateWithBlock:^(BOOL updated, NSError *error) {
+            if (!error) {
+                [recipe save];
+            }
+        }];
+        [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
         
     }];
     

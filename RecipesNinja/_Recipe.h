@@ -5,13 +5,16 @@
 
 
 extern const struct RecipeAttributes {
+	__unsafe_unretained NSString *createdAt;
 	__unsafe_unretained NSString *difficulty;
 	__unsafe_unretained NSString *favorite;
 	__unsafe_unretained NSString *instructions;
 	__unsafe_unretained NSString *name;
+	__unsafe_unretained NSString *photo;
 	__unsafe_unretained NSString *photoURL;
 	__unsafe_unretained NSString *recipeDescription;
 	__unsafe_unretained NSString *rid;
+	__unsafe_unretained NSString *updatedAt;
 } RecipeAttributes;
 
 extern const struct RecipeRelationships {
@@ -19,6 +22,9 @@ extern const struct RecipeRelationships {
 
 extern const struct RecipeFetchedProperties {
 } RecipeFetchedProperties;
+
+
+
 
 
 
@@ -37,6 +43,16 @@ extern const struct RecipeFetchedProperties {
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (RecipeID*)objectID;
+
+
+
+
+
+@property (nonatomic, strong) NSDate* createdAt;
+
+
+
+//- (BOOL)validateCreatedAt:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -90,6 +106,16 @@ extern const struct RecipeFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSData* photo;
+
+
+
+//- (BOOL)validatePhoto:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
 @property (nonatomic, strong) NSString* photoURL;
 
 
@@ -124,6 +150,16 @@ extern const struct RecipeFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSDate* updatedAt;
+
+
+
+//- (BOOL)validateUpdatedAt:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
 
 @end
 
@@ -132,6 +168,12 @@ extern const struct RecipeFetchedProperties {
 @end
 
 @interface _Recipe (CoreDataGeneratedPrimitiveAccessors)
+
+
+- (NSDate*)primitiveCreatedAt;
+- (void)setPrimitiveCreatedAt:(NSDate*)value;
+
+
 
 
 - (NSNumber*)primitiveDifficulty;
@@ -164,6 +206,12 @@ extern const struct RecipeFetchedProperties {
 
 
 
+- (NSData*)primitivePhoto;
+- (void)setPrimitivePhoto:(NSData*)value;
+
+
+
+
 - (NSString*)primitivePhotoURL;
 - (void)setPrimitivePhotoURL:(NSString*)value;
 
@@ -181,6 +229,12 @@ extern const struct RecipeFetchedProperties {
 
 - (int32_t)primitiveRidValue;
 - (void)setPrimitiveRidValue:(int32_t)value_;
+
+
+
+
+- (NSDate*)primitiveUpdatedAt;
+- (void)setPrimitiveUpdatedAt:(NSDate*)value;
 
 
 

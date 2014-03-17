@@ -4,13 +4,16 @@
 #import "_Recipe.h"
 
 const struct RecipeAttributes RecipeAttributes = {
+	.createdAt = @"createdAt",
 	.difficulty = @"difficulty",
 	.favorite = @"favorite",
 	.instructions = @"instructions",
 	.name = @"name",
+	.photo = @"photo",
 	.photoURL = @"photoURL",
 	.recipeDescription = @"recipeDescription",
 	.rid = @"rid",
+	.updatedAt = @"updatedAt",
 };
 
 const struct RecipeRelationships RecipeRelationships = {
@@ -63,6 +66,13 @@ const struct RecipeFetchedProperties RecipeFetchedProperties = {
 
 	return keyPaths;
 }
+
+
+
+
+@dynamic createdAt;
+
+
 
 
 
@@ -133,6 +143,13 @@ const struct RecipeFetchedProperties RecipeFetchedProperties = {
 
 
 
+@dynamic photo;
+
+
+
+
+
+
 @dynamic photoURL;
 
 
@@ -168,6 +185,13 @@ const struct RecipeFetchedProperties RecipeFetchedProperties = {
 - (void)setPrimitiveRidValue:(int32_t)value_ {
 	[self setPrimitiveRid:[NSNumber numberWithInt:value_]];
 }
+
+
+
+
+
+@dynamic updatedAt;
+
 
 
 

@@ -2,6 +2,8 @@
 #import "HyperAPIClient.h"
 #import "CoreDataHelper.h"
 #import "NumberHelper.h"
+#import "DateHelper.h"
+#import "StringHelper.h"
 
 @interface Recipe ()
 
@@ -13,7 +15,7 @@
 @implementation Recipe
 
 
-
+#pragma mark - Initializers
 
 + (Recipe *)recipeFromAttributes:(NSDictionary *)attributes {
     
@@ -21,6 +23,7 @@
     
     
     NSNumber *rid = [NumberHelper numberFromPossibleNull:[attributes valueForKey:@"id"]];
+    NSDate *updatedAt = [DateHelper ISO8601StringToDate:[attributes valueForKey:@"updated_at"]];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:[Recipe entityName]];
     request.entity = [NSEntityDescription entityForName:[Recipe entityName] inManagedObjectContext:context];
@@ -31,29 +34,18 @@
     
     // Create new
     if (!error && !recipe) {
-        
         recipe = [Recipe insertInManagedObjectContext:context];
-        
-        recipe.rid = rid;
-
-        recipe.name = [attributes valueForKey:@"name"];
-        recipe.recipeDescription = [attributes valueForKey:@"description"];
-        recipe.instructions = [[attributes valueForKey:@"instructions"] isKindOfClass:[NSNull class]] ? @"" : [attributes valueForKey:@"instructions"];
-        recipe.favorite = [NumberHelper numberFromPossibleNull:[attributes valueForKey:@"favorite"]];
-        recipe.difficulty = [NumberHelper numberFromPossibleNull:[attributes valueForKey:@"difficulty"]];
-        recipe.photoURL = [attributes valueForKeyPath:@"photo.url"];
-        
-        [recipe save];
+        [recipe setAttributes:attributes];
+    } else if (![updatedAt isEqualToDate:recipe.updatedAt]) {
+        [recipe setAttributes:attributes];
     }
-    
-// Update if updated_at is different
-//    else if () {
-//    }
     
     return recipe;
 }
 
-#pragma mark -
+
+
+#pragma mark - Network methods
 
 + (NSURLSessionDataTask *)allRecipesWithBlock:(void (^)(NSArray *recipes, NSError *error))block {
     return [[HyperAPIClient sharedClient] GET:@"recipes" parameters:nil success:^(NSURLSessionDataTask * __unused task, id JSON) {
@@ -75,8 +67,96 @@
     }];
 }
 
+- (NSURLSessionDataTask *)saveWithBlock:(void (^)(BOOL saved, NSError *error))block {
+    if (self.rid != nil) {
+        return [self updateWithBlock:block];
+    } else {
+        return [[HyperAPIClient sharedClient] POST:@"recipes" parameters:[self parameters] success:^(NSURLSessionDataTask *task, id responseObject) {
+            
+            // TODO: send multipart with image
+            
+            NSLog(@"Saved response: %@", responseObject);
+            
+            if (block) {
+                block(YES, nil);
+            }
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            if (block) {
+                block(NO, error);
+            }
+        }];
+    }
+}
 
-#pragma mark -
+- (NSURLSessionDataTask *)updateWithBlock:(void (^)(BOOL updated, NSError *error))block {
+    
+    NSString *URLPath = [NSString stringWithFormat:@"recipes/%d", self.ridValue];
+    NSDictionary *params = [self parameters];
+    
+    NSLog(@"PUT: %@, params: %@", URLPath, params);
+    
+    return [[HyperAPIClient sharedClient] PUT:URLPath parameters:params success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSLog(@"Update response: %@", responseObject);
+        
+        if (block) {
+            block(YES, nil);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if (block) {
+            block(NO, error);
+        }
+    }];
+}
+
+- (NSURLSessionDataTask *)deleteWithBlock:(void (^)(BOOL deleted, NSError *error))block {
+    NSString *URLPath = [NSString stringWithFormat:@"recipes/%d", self.ridValue];
+    
+    return [[HyperAPIClient sharedClient] DELETE:URLPath parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSLog(@"Delete response: %@", responseObject);
+        
+        if (block) {
+            block(YES, nil);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if (block) {
+            block(NO, error);
+        }
+    }];
+}
+
+
+#pragma mark - Get values
+
+- (NSDictionary *)parameters {
+    return @{@"recipe": @{
+                     @"id" : self.rid,
+                     @"name": self.name,
+                     @"description": self.recipeDescription,
+                     @"instructions": self.instructions,
+                     @"favorite": self.favorite,
+                     @"difficulty": self.difficulty
+                     }};
+}
+
+#pragma mark - Set values
+
+- (void)setAttributes:(NSDictionary *)attributes {
+    self.rid = [NumberHelper numberFromPossibleNull:[attributes valueForKey:@"id"]];
+    
+    self.name = [attributes valueForKey:@"name"];
+    self.recipeDescription = [attributes valueForKey:@"description"];
+    self.instructions = [StringHelper stringFromPotetialNull:[attributes valueForKey:@"instructions"]];
+    self.favorite = [NumberHelper numberFromPossibleNull:[attributes valueForKey:@"favorite"]];
+    self.difficulty = [NumberHelper numberFromPossibleNull:[attributes valueForKey:@"difficulty"]];
+    self.photoURL = [attributes valueForKeyPath:@"photo.url"];
+    
+    self.createdAt = [DateHelper ISO8601StringToDate:[attributes valueForKey:@"created_at"]];
+    self.updatedAt = [DateHelper ISO8601StringToDate:[attributes valueForKey:@"updated_at"]];
+    
+    [self save];
+}
 
 - (BOOL)setAsFavorite:(BOOL)favorite {
     [self setFavoriteValue:favorite];

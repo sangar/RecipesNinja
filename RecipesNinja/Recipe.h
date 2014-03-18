@@ -11,10 +11,10 @@
 
 - (NSDictionary *)parameters;
 
+- (NSString *)difficultyToString;
+
 - (void)setAttributes:(NSDictionary *)attributes;
-
 - (void)setPhotoInImageView:(UIImageView *)imageView;
-
 - (BOOL)setAsFavorite:(BOOL)favorite;
 - (BOOL)isFavorite;
 

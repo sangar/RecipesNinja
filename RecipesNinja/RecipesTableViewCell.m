@@ -11,11 +11,14 @@
 #import "GSProgressHUD.h"
 #import "UIAlertView+AFNetworking.h"
 
+
+
 @interface RecipesTableViewCell ()
 
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UITextField *nameTextField;
 @property (nonatomic, strong) UITextView *descriptionTextField;
+@property (nonatomic, strong) UILabel *difficultyLabel;
 @property(nonatomic, strong) UIButton *favRecipeButton;
 
 @end
@@ -35,21 +38,21 @@
         _imageView.layer.cornerRadius = 60.f;
         _imageView.layer.masksToBounds = YES;
         
-        _nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(115.f, 10.f, 200.f, 25.f)];
+        _nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(120.f, 7.f, 195.f, 25.f)];
         _nameTextField.backgroundColor = [UIColor clearColor];
-        _nameTextField.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:22.f];
-//        _nameTextField.adjustsFontSizeToFitWidth = YES;
+        _nameTextField.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:22.f];
         _nameTextField.userInteractionEnabled = NO;
         
-        _descriptionTextField = [[UITextView alloc] initWithFrame:CGRectMake(130.f, 30.f, 180.f, 70.f)];
+        _descriptionTextField = [[UITextView alloc] initWithFrame:CGRectMake(130.f, 25.f, 180.f, 70.f)];
         _descriptionTextField.backgroundColor = [UIColor clearColor];
         _descriptionTextField.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:18.f];
-//        _descriptionTextField.adjustsFontSizeToFitWidth = YES;
         _descriptionTextField.userInteractionEnabled = NO;
         
-//        _favImageView = [[UIImageView alloc] initWithFrame:CGRectMake(285.f, 105.f, 25.f, 25.f)];
-//        _favImageView.image = [[UIImage imageNamed:@"star"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-//        _favImageView.tintColor = [UIColor yellowColor];
+        _difficultyLabel = [[UILabel alloc] initWithFrame:CGRectMake(175.f, 109.f, 100.f, 25.f)];
+        _difficultyLabel.backgroundColor = [UIColor clearColor];
+        _difficultyLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:16.f];
+        _difficultyLabel.textAlignment = NSTextAlignmentRight;
+        _difficultyLabel.adjustsFontSizeToFitWidth = YES;
         
         _favRecipeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _favRecipeButton.frame = CGRectMake(285.f, 105.f, 25.f, 25.f);
@@ -59,24 +62,16 @@
         [self.contentView addSubview:_imageView];
         [self.contentView addSubview:_nameTextField];
         [self.contentView addSubview:_descriptionTextField];
+        [self.contentView addSubview:_difficultyLabel];
         [self.contentView addSubview:_favRecipeButton];
     }
     return self;
 }
 
 - (void)favRecipeButtonPressed:(id)sender {
-    
-    // TODO: make delegate method and use same code as tableview
-    
-    _recipe.favoriteValue = ![_recipe favoriteValue];
-    [GSProgressHUD popImage:[UIImage imageNamed:@"star"] withStatus:_recipe.favoriteValue ? NSLocalizedString(@"Favorite", nil) : NSLocalizedString(@"NOT", nil)];
-    
-    NSURLSessionDataTask *task = [_recipe updateWithBlock:^(BOOL updated, NSError *error) {
-        if (!error) {
-            [_recipe save];
-        }
-    }];
-    [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
+    if ([self.delegate respondsToSelector:@selector(didPressFavoriteButtonInCell:)]) {
+        [self.delegate didPressFavoriteButtonInCell:self];
+    }
 }
 
 - (void)setRecipe:(Recipe *)recipe {
@@ -85,6 +80,7 @@
     [recipe setPhotoInImageView:self.imageView];
     self.nameTextField.text = [recipe name];
     self.descriptionTextField.text = [recipe recipeDescription];
+    self.difficultyLabel.text = recipe.difficultyToString;
     if ([recipe isFavorite]) {
         [_favRecipeButton setImage:[UIImage imageNamed:@"star_sel"] forState:UIControlStateNormal];
     } else {

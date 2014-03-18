@@ -10,8 +10,19 @@
 #import "MCSwipeTableViewCell.h"
 #import "Recipe.h"
 
+@protocol RecipesTableViewCellDelegate;
+
+
 @interface RecipesTableViewCell : MCSwipeTableViewCell
 
 @property (nonatomic, strong) Recipe *recipe;
+@property (nonatomic, assign) id<RecipesTableViewCellDelegate, MCSwipeTableViewCellDelegate> delegate;
+
+@end
+
+
+@protocol RecipesTableViewCellDelegate <MCSwipeTableViewCellDelegate>
+
+- (void)didPressFavoriteButtonInCell:(RecipesTableViewCell *)cell;
 
 @end

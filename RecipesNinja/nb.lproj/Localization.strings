@@ -8,5 +8,9 @@
 
 "Recipes" = "Oppskrifter";
 
+"Easy" = "Lett";
+"Intermediate" = "Mellomnivå";
+"Hard" = "Vanskelig";
+
 "Favorite" = "Favoritt";
 "NOT" = "NOT";

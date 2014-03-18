@@ -139,6 +139,18 @@
                      }};
 }
 
+- (NSString *)difficultyToString {
+    switch (self.difficultyValue) {
+        case 1:
+            return NSLocalizedString(@"Easy", nil);
+        case 2:
+            return NSLocalizedString(@"Intermediate", nil);
+        case 3:
+            return NSLocalizedString(@"Hard", nil);
+    }
+    return NSLocalizedString(@"Unknown", nil);
+}
+
 #pragma mark - Set values
 
 - (void)setPhotoInImageView:(UIImageView *)imageView {

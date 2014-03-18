@@ -8,5 +8,9 @@
 
 "Recipes" = "Recipes";
 
+"Easy" = "Easy";
+"Intermediate" = "Intermediate";
+"Hard" = "Hard";
+
 "Favorite" = "Favorite";
 "NOT" = "NOT";

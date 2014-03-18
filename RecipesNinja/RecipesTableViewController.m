@@ -13,11 +13,12 @@
 #import "UIAlertView+AFNetworking.h"
 #import "GSProgressHUD.h"
 
-@interface RecipesTableViewController () <NSFetchedResultsControllerDelegate, UINavigationControllerDelegate, MCSwipeTableViewCellDelegate>
+@interface RecipesTableViewController () <NSFetchedResultsControllerDelegate, UINavigationControllerDelegate, RecipesTableViewCellDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 - (UIView *)viewWithImageName:(NSString *)imageName;
+- (void)favoriteRecipeAction:(Recipe *)recipe;
 
 @end
 
@@ -73,6 +74,28 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark -
+#pragma mark - self methods
+
+- (void)favoriteRecipeAction:(Recipe *)recipe {
+    
+    recipe.favoriteValue = ![recipe favoriteValue];
+    [GSProgressHUD popImage:[UIImage imageNamed:@"star"] withStatus:recipe.favoriteValue ? NSLocalizedString(@"Favorite", nil) : NSLocalizedString(@"NOT", nil)];
+    
+    NSURLSessionDataTask *task = [recipe updateWithBlock:^(BOOL updated, NSError *error) {
+        if (!error) {
+            [recipe save];
+        }
+    }];
+    [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
+}
+
+- (UIView *)viewWithImageName:(NSString *)imageName {
+    UIImage *image = [UIImage imageNamed:imageName];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    imageView.contentMode = UIViewContentModeCenter;
+    return imageView;
+}
 
 #pragma mark -
 #pragma mark - Table view data source
@@ -91,6 +114,7 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     RecipesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
+    cell.delegate = self;
     cell.defaultColor = [UIColor colorWithWhite:.95f alpha:1.f];
     
     // Configure the cell...
@@ -105,26 +129,10 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
 
     [cell setSwipeGestureWithView:checkView color:color mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
         
-        recipe.favoriteValue = ![recipe favoriteValue];
-        [GSProgressHUD popImage:[UIImage imageNamed:@"star"] withStatus:recipe.favoriteValue ? NSLocalizedString(@"Favorite", nil) : NSLocalizedString(@"NOT", nil)];
-        
-        NSURLSessionDataTask *task = [recipe updateWithBlock:^(BOOL updated, NSError *error) {
-            if (!error) {
-                [recipe save];
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-            }
-        }];
-        [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
+        [self favoriteRecipeAction:recipe];
     }];
     
     return cell;
-}
-
-- (UIView *)viewWithImageName:(NSString *)imageName {
-    UIImage *image = [UIImage imageNamed:imageName];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-    imageView.contentMode = UIViewContentModeCenter;
-    return imageView;
 }
 
 
@@ -144,6 +152,17 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
     
     [self.navigationController pushViewController:rdvc animated:YES];
     
+}
+
+
+#pragma mark -
+#pragma mark - RecipesTableViewCellDelegate methods
+
+- (void)didPressFavoriteButtonInCell:(RecipesTableViewCell *)cell {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    Recipe *recipe = (Recipe *) [_fetchedResultsController objectAtIndexPath:indexPath];
+    
+    [self favoriteRecipeAction:recipe];
 }
 
 

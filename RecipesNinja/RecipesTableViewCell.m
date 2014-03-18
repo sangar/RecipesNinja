@@ -8,13 +8,15 @@
 
 #import "RecipesTableViewCell.h"
 #import <QuartzCore/QuartzCore.h>
+#import "GSProgressHUD.h"
+#import "UIAlertView+AFNetworking.h"
 
 @interface RecipesTableViewCell ()
 
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UITextField *nameTextField;
 @property (nonatomic, strong) UITextView *descriptionTextField;
-@property (nonatomic, strong) UIImageView *favImageView;
+@property(nonatomic, strong) UIButton *favRecipeButton;
 
 @end
 
@@ -45,31 +47,48 @@
 //        _descriptionTextField.adjustsFontSizeToFitWidth = YES;
         _descriptionTextField.userInteractionEnabled = NO;
         
-        _favImageView = [[UIImageView alloc] initWithFrame:CGRectMake(285.f, 105.f, 25.f, 25.f)];
-        _favImageView.image = [[UIImage imageNamed:@"star"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        _favImageView.tintColor = [UIColor yellowColor];
+//        _favImageView = [[UIImageView alloc] initWithFrame:CGRectMake(285.f, 105.f, 25.f, 25.f)];
+//        _favImageView.image = [[UIImage imageNamed:@"star"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+//        _favImageView.tintColor = [UIColor yellowColor];
+        
+        _favRecipeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _favRecipeButton.frame = CGRectMake(285.f, 105.f, 25.f, 25.f);
+        [_favRecipeButton setImage:[UIImage imageNamed:@"star_unsel"] forState:UIControlStateNormal];
+        [_favRecipeButton addTarget:self action:@selector(favRecipeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         
         [self.contentView addSubview:_imageView];
         [self.contentView addSubview:_nameTextField];
         [self.contentView addSubview:_descriptionTextField];
-        [self.contentView addSubview:_favImageView];
+        [self.contentView addSubview:_favRecipeButton];
     }
     return self;
 }
 
+- (void)favRecipeButtonPressed:(id)sender {
+    
+    // TODO: make delegate method and use same code as tableview
+    
+    _recipe.favoriteValue = ![_recipe favoriteValue];
+    [GSProgressHUD popImage:[UIImage imageNamed:@"star"] withStatus:_recipe.favoriteValue ? NSLocalizedString(@"Favorite", nil) : NSLocalizedString(@"NOT", nil)];
+    
+    NSURLSessionDataTask *task = [_recipe updateWithBlock:^(BOOL updated, NSError *error) {
+        if (!error) {
+            [_recipe save];
+        }
+    }];
+    [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
+}
+
 - (void)setRecipe:(Recipe *)recipe {
     _recipe = recipe;
-        
-//    [self.imageView setImageWithURL:[NSURL URLWithString:[recipe valueForKey:@"photoURL"]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
-    
     
     [recipe setPhotoInImageView:self.imageView];
     self.nameTextField.text = [recipe name];
     self.descriptionTextField.text = [recipe recipeDescription];
     if ([recipe isFavorite]) {
-        _favImageView.alpha = 1.f;
+        [_favRecipeButton setImage:[UIImage imageNamed:@"star_sel"] forState:UIControlStateNormal];
     } else {
-        _favImageView.alpha = 0.f;
+        [_favRecipeButton setImage:[UIImage imageNamed:@"star_unsel"] forState:UIControlStateNormal];
     }
 }
 

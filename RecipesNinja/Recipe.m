@@ -130,7 +130,7 @@
 
 - (NSDictionary *)parameters {
     return @{@"recipe": @{
-                     @"id" : self.rid,
+                     @"id": self.rid,
                      @"name": self.name,
                      @"description": self.recipeDescription,
                      @"instructions": self.instructions,
@@ -157,14 +157,12 @@
 
 - (void)setAttributes:(NSDictionary *)attributes {
     self.rid = [NumberHelper numberFromPossibleNull:[attributes valueForKey:@"id"]];
-    
     self.name = [attributes valueForKey:@"name"];
     self.recipeDescription = [attributes valueForKey:@"description"];
     self.instructions = [StringHelper stringFromPotetialNull:[attributes valueForKey:@"instructions"]];
     self.favorite = [NumberHelper numberFromPossibleNull:[attributes valueForKey:@"favorite"]];
     self.difficulty = [NumberHelper numberFromPossibleNull:[attributes valueForKey:@"difficulty"]];
     self.photoURL = [attributes valueForKeyPath:@"photo.url"];
-    
     self.createdAt = [DateHelper ISO8601StringToDate:[attributes valueForKey:@"created_at"]];
     self.updatedAt = [DateHelper ISO8601StringToDate:[attributes valueForKey:@"updated_at"]];
     

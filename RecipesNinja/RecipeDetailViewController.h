@@ -9,8 +9,20 @@
 #import <UIKit/UIKit.h>
 #import "Recipe.h"
 
+@protocol RecipeDetailViewControllerDelegate;
+
+
 @interface RecipeDetailViewController : UITableViewController
 
 @property (nonatomic, strong) Recipe *recipe;
+@property (nonatomic, assign) id<RecipeDetailViewControllerDelegate> delegate;
+
+@end
+
+
+
+@protocol RecipeDetailViewControllerDelegate <NSObject>
+
+- (void)didPressFavoriteButtonWithRecipe:(Recipe *)recipe;
 
 @end

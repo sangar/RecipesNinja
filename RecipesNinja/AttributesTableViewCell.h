@@ -7,7 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Recipe.h"
+
+@protocol AttributesTableViewCellDelegate;
+
 
 @interface AttributesTableViewCell : UITableViewCell
+
+@property (nonatomic, strong) Recipe *recipe;
+@property (nonatomic, assign) id delegate;
+
+@end
+
+
+@protocol AttributesTableViewCellDelegate <NSObject>
+
+- (void)didPressFavoriteButtonInCell:(AttributesTableViewCell *)cell;
 
 @end

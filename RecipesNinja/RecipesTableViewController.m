@@ -13,7 +13,7 @@
 #import "UIAlertView+AFNetworking.h"
 #import "GSProgressHUD.h"
 
-@interface RecipesTableViewController () <NSFetchedResultsControllerDelegate, UINavigationControllerDelegate, RecipesTableViewCellDelegate>
+@interface RecipesTableViewController () <NSFetchedResultsControllerDelegate, UINavigationControllerDelegate, RecipesTableViewCellDelegate, RecipeDetailViewControllerDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
@@ -149,9 +149,9 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
     
     RecipeDetailViewController *rdvc = [[RecipeDetailViewController alloc] initWithStyle:UITableViewStylePlain];
     rdvc.recipe = recipe;
+    rdvc.delegate = self;
     
     [self.navigationController pushViewController:rdvc animated:YES];
-    
 }
 
 
@@ -162,6 +162,14 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     Recipe *recipe = (Recipe *) [_fetchedResultsController objectAtIndexPath:indexPath];
     
+    [self favoriteRecipeAction:recipe];
+}
+
+
+#pragma mark -
+#pragma mark - RecipeDetailViewControllerDelegate methods
+
+- (void)didPressFavoriteButtonWithRecipe:(Recipe *)recipe {
     [self favoriteRecipeAction:recipe];
 }
 

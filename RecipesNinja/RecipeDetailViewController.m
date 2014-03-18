@@ -7,8 +7,10 @@
 //
 
 #import "RecipeDetailViewController.h"
+#import "AttributesTableViewCell.h"
+#import "TextViewTableViewCell.h"
 
-@interface RecipeDetailViewController ()
+@interface RecipeDetailViewController () <AttributesTableViewCellDelegate>
 
 @property(nonatomic, strong) NSArray *fields;
 
@@ -40,13 +42,14 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    _fields = @[@"name", @"desc", @"instr"];
+    _fields = @[@"attr", @"name", @"desc", @"instr"];
     
     self.title = [_recipe name];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:TextViewIdentifier];
+    [self.tableView registerClass:[TextViewTableViewCell class] forCellReuseIdentifier:TextViewIdentifier];
+    [self.tableView registerClass:[AttributesTableViewCell class] forCellReuseIdentifier:AttributesIdentifier];
 }
 
 - (void)didReceiveMemoryWarning
@@ -81,6 +84,17 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
 
 
 #pragma mark -
+#pragma mark - AttributesTableViewCellDelegate delegate methods
+
+- (void)didPressFavoriteButtonInCell:(AttributesTableViewCell *)cell {
+    if ([self.delegate respondsToSelector:@selector(didPressFavoriteButtonWithRecipe:)]) {
+        [self.delegate didPressFavoriteButtonWithRecipe:_recipe];
+    }
+    [self.tableView reloadData];
+}
+
+
+#pragma mark -
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -98,7 +112,7 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
 - (NSString *)identifierForIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.row) {
         case 0:
-            break;
+            return AttributesIdentifier;
     }
     return TextViewIdentifier;
 }
@@ -107,17 +121,19 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[self identifierForIndexPath:indexPath] forIndexPath:indexPath];
     
-    cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:22.f];
-    
     // Configure the cell...
     switch (indexPath.row) {
         case 0:
-            cell.textLabel.text = [_recipe name];
+            ((AttributesTableViewCell *)cell).delegate = self;
+            ((AttributesTableViewCell *)cell).recipe = _recipe;
             break;
         case 1:
-            cell.textLabel.text = [_recipe recipeDescription];
+            cell.textLabel.text = [_recipe name];
             break;
         case 2:
+            cell.textLabel.text = [_recipe recipeDescription];
+            break;
+        case 3:
             cell.textLabel.text = [_recipe instructions];
             break;
     }

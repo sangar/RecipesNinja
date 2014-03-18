@@ -30,10 +30,16 @@
         [_favRecipeButton setImage:[UIImage imageNamed:@"star_unsel"] forState:UIControlStateNormal];
         [_favRecipeButton addTarget:self action:@selector(favRecipeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         
-        _difficultyLabel = [[UILabel alloc] initWithFrame:CGRectMake(202.5f, 7.5f, 55.f, 35.f)];
+        UIView *divider = [[UIView alloc] initWithFrame:CGRectMake(320.f/2.f, 0.f, .5f, 50.f)];
+        divider.backgroundColor = [UIColor blackColor];
         
+        _difficultyLabel = [[UILabel alloc] initWithFrame:CGRectMake(320.f/2.f, 0.f, 160.f, 50.f)];
+        _difficultyLabel.backgroundColor = [UIColor clearColor];
+        _difficultyLabel.adjustsFontSizeToFitWidth = YES;
+        _difficultyLabel.textAlignment = NSTextAlignmentCenter;
         
         [self.contentView addSubview:_favRecipeButton];
+        [self.contentView addSubview:divider];
         [self.contentView addSubview:_difficultyLabel];
     }
     
@@ -60,7 +66,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
-    [super setSelected:selected animated:animated];
+//    [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
 }

@@ -82,16 +82,16 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
     return headerView;
 }
 
-
-#pragma mark -
-#pragma mark - AttributesTableViewCellDelegate delegate methods
-
-- (void)didPressFavoriteButtonInCell:(AttributesTableViewCell *)cell {
-    if ([self.delegate respondsToSelector:@selector(didPressFavoriteButtonWithRecipe:)]) {
-        [self.delegate didPressFavoriteButtonWithRecipe:_recipe];
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.row) {
+        case 0:
+            return 50.f;
+        
     }
-    [self.tableView reloadData];
+    return [super tableView:tableView heightForRowAtIndexPath:indexPath];
 }
+
+
 
 
 #pragma mark -
@@ -179,6 +179,16 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
     return YES;
 }
 */
+
+#pragma mark -
+#pragma mark - AttributesTableViewCellDelegate delegate methods
+
+- (void)didPressFavoriteButtonInCell:(AttributesTableViewCell *)cell {
+    if ([self.delegate respondsToSelector:@selector(didPressFavoriteButtonWithRecipe:)]) {
+        [self.delegate didPressFavoriteButtonWithRecipe:_recipe];
+    }
+    [self.tableView reloadData];
+}
 
 
 @end

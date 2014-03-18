@@ -15,6 +15,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
+        self.textLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:22.f];
     }
     return self;
 }

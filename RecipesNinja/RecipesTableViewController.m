@@ -82,7 +82,7 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
     recipe.favoriteValue = ![recipe favoriteValue];
     [GSProgressHUD popImage:[UIImage imageNamed:@"star"] withStatus:recipe.favoriteValue ? NSLocalizedString(@"Favorite", nil) : NSLocalizedString(@"NOT", nil)];
     
-    NSURLSessionDataTask *task = [recipe updateWithBlock:^(BOOL updated, NSError *error) {
+    NSURLSessionDataTask *task = [recipe saveWithBlock:^(BOOL updated, NSError *error) {
         if (!error) {
             [recipe save];
         }
@@ -176,7 +176,7 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
 
 #pragma mark -
 #pragma mark - UIViewController delegate methods
-
+/*
 - (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC
 {
     if (operation == UINavigationControllerOperationPush) {
@@ -185,7 +185,7 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
     
     return nil;
 }
-
+*/
 
 #pragma mark -
 #pragma mark - NSFetchedResultsController delegate methods

@@ -45,4 +45,10 @@
     // Configure the view for the selected state
 }
 
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    [super setEditing:editing animated:animated];
+    
+    NSLog(@"%@ Set editing", NSStringFromClass([self class]));
+}
+
 @end

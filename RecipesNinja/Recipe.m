@@ -10,6 +10,7 @@
 @interface Recipe ()
 
 // Private interface goes here.
+- (NSURLSessionDataTask *)updateWithBlock:(void (^)(BOOL updated, NSError *error))block;
 
 @end
 
@@ -149,6 +150,56 @@
             return NSLocalizedString(@"Hard", nil);
     }
     return NSLocalizedString(@"Unknown", nil);
+}
+
++ (UIFont *)fontForName {
+    return [UIFont fontWithName:@"Helvetica-Light" size:22.f];
+}
+
++ (UIFont *)fontForDescription {
+    return [UIFont fontWithName:@"Helvetica-Light" size:22.f];
+}
+
++ (UIFont *)fontForInstructions {
+    return [UIFont fontWithName:@"Helvetica-Light" size:20.f];
+}
+
+- (NSAttributedString *)attributedStringFromString:(NSString *)string andFond:(UIFont *)font {
+    return [[NSAttributedString alloc] initWithString:string attributes:@{NSFontAttributeName:font}];
+}
+
+- (NSAttributedString *)attributedStringForName {
+    return [self attributedStringFromString:self.name andFond:[Recipe fontForName]];
+}
+
+- (NSAttributedString *)attributedStringForDescription {
+    return [self attributedStringFromString:self.recipeDescription andFond:[Recipe fontForDescription]];
+}
+
+- (NSAttributedString *)attributedStringForInstructions {
+    return [self attributedStringFromString:self.instructions andFond:[Recipe fontForInstructions]];
+}
+
+- (CGFloat)textViewHeghtForString:(NSString *)string andFont:(UIFont *)font {
+    UITextView *calcTextView = [[UITextView alloc] init];
+    NSAttributedString *attributedText = [self attributedStringFromString:string andFond:font];
+    [calcTextView setAttributedText:attributedText];
+    CGSize size = [calcTextView sizeThatFits:CGSizeMake(320.f, FLT_MAX)];
+    return size.height;
+}
+
+static CGFloat const kInfoLabelHeight = 21.f;
+
+- (CGFloat)textFieldHeightForName {
+    return [self textViewHeghtForString:self.name andFont:[Recipe fontForName]] + kInfoLabelHeight;
+}
+
+- (CGFloat)textFieldHeightForDescription {
+    return [self textViewHeghtForString:self.recipeDescription andFont:[Recipe fontForDescription]] + kInfoLabelHeight;
+}
+
+- (CGFloat)textFieldHeightForInstructions {
+    return [self textViewHeghtForString:self.instructions andFont:[Recipe fontForInstructions]] + kInfoLabelHeight;
 }
 
 #pragma mark - Set values

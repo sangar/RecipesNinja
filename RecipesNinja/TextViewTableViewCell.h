@@ -11,5 +11,6 @@
 @interface TextViewTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) UILabel *infoLabel;
+@property (nonatomic, strong) UITextView *textView;
 
 @end

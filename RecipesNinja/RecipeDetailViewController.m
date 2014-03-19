@@ -42,7 +42,7 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     _fieldsFirstSection = @[@"photo"];
     _fieldsSecondSection = @[NSLocalizedString(@"Name", nil), NSLocalizedString(@"Description", nil), NSLocalizedString(@"Instructions", nil)];
@@ -101,8 +101,15 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
             break;
         case 1:
             switch (indexPath.row) {
+                case 0:
+                    return [_recipe textFieldHeightForName];
+                case 1:
+                    return [_recipe textFieldHeightForDescription];
                 case 2:
-                    return 200.f;
+                    ;
+                    CGFloat height = [_recipe textFieldHeightForInstructions];
+                    
+                    return height > 105.f ? height : 105.f;
             }
     }
     
@@ -156,18 +163,30 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
             break;
         case 1:
             ((TextViewTableViewCell *)cell).infoLabel.text = [_fieldsSecondSection objectAtIndex:indexPath.row];
+            UITextView *cellTextView = ((TextViewTableViewCell *)cell).textView;
+            
+            BOOL resize = YES;
             
             switch (indexPath.row) {
                 case 0:
-                    cell.textLabel.text = [_recipe name];
+                    cellTextView.attributedText = [_recipe attributedStringForName];
                     break;
                 case 1:
-                    cell.textLabel.text = [_recipe recipeDescription];
+                    cellTextView.attributedText = [_recipe attributedStringForDescription];
                     break;
                 case 2:
-                    cell.textLabel.text = [_recipe instructions];
+                    ;
+                    NSAttributedString *attrString = [_recipe attributedStringForInstructions];
+                    resize = [[attrString string] length] == 0 ? NO : YES;
+                    
+                    cellTextView.attributedText = attrString;
                     break;
             }
+            
+            if (resize) {
+                [cellTextView sizeToFit];
+            }
+            
             break;
     }
     
@@ -175,27 +194,26 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
 }
 
 
-/*
+
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
     return YES;
 }
-*/
 
-/*
+
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+//    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//        // Delete the row from the data source
+//        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+//        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+//    }   
 }
-*/
 
 /*
 // Override to support rearranging the table view.

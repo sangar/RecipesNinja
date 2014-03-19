@@ -7,6 +7,7 @@
 //
 
 #import "TextViewTableViewCell.h"
+#import "Recipe.h"
 
 @implementation TextViewTableViewCell
 
@@ -19,9 +20,11 @@
         _infoLabel.backgroundColor = [UIColor clearColor];
         _infoLabel.font = [UIFont systemFontOfSize:12.f];
         
-        self.textLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:22.f];
+        _textView = [[UITextView alloc] initWithFrame:CGRectMake(0.f, 21.f, 320.f, 84.f)];
+        _textView.userInteractionEnabled = NO;
         
         [self.contentView addSubview:_infoLabel];
+        [self.contentView addSubview:_textView];
     }
     return self;
 }
@@ -31,6 +34,12 @@
 //    [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    [super setEditing:editing animated:animated];
+    
+    NSLog(@"%@ Set editing", NSStringFromClass([self class]));
 }
 
 @end

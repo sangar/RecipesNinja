@@ -7,17 +7,19 @@
 //
 
 #import "RecipeDetailViewController.h"
-#import "AttributesTableViewCell.h"
+#import "AttributesTableViewHeaderFooterView.h"
 #import "TextViewTableViewCell.h"
+#import "RecipePhotoTableViewCell.h"
 
-@interface RecipeDetailViewController () <AttributesTableViewCellDelegate>
+@interface RecipeDetailViewController () <AttributesTableViewHeaderFooterViewDelegate>
 
-@property(nonatomic, strong) NSArray *fields;
+@property(nonatomic, strong) NSArray *fieldsFirstSection;
+@property(nonatomic, strong) NSArray *fieldsSecondSection;
 
 @end
 
 
-static NSString * const HeaderImageIdentifier = @"HeaderImageIdentifier";
+static NSString * const ImageViewIdentifier = @"ImageViewIdentifier";
 static NSString * const TextViewIdentifier = @"TextViewIdentifier";
 static NSString * const AttributesIdentifier = @"AttributesIdentifier";
 
@@ -42,14 +44,19 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    _fields = @[@"attr", @"name", @"desc", @"instr"];
+    _fieldsFirstSection = @[@"photo"];
+    _fieldsSecondSection = @[NSLocalizedString(@"Name", nil), NSLocalizedString(@"Description", nil), NSLocalizedString(@"Instructions", nil)];
+    
     
     self.title = [_recipe name];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
     
+    [self.tableView registerClass:[AttributesTableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:AttributesIdentifier];
+    
+    [self.tableView registerClass:[RecipePhotoTableViewCell class] forCellReuseIdentifier:ImageViewIdentifier];
     [self.tableView registerClass:[TextViewTableViewCell class] forCellReuseIdentifier:TextViewIdentifier];
-    [self.tableView registerClass:[AttributesTableViewCell class] forCellReuseIdentifier:AttributesIdentifier];
 }
 
 - (void)didReceiveMemoryWarning
@@ -63,31 +70,42 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
 #pragma mark - Table view delegate methods
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 200.f;
+    if (section == 1) {
+        return 50.f;
+    }
+    return [super tableView:tableView heightForHeaderInSection:section];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
-    UITableViewHeaderFooterView *headerView = [[UITableViewHeaderFooterView alloc] initWithReuseIdentifier:HeaderImageIdentifier];
+    if (section == 1) {
+        AttributesTableViewHeaderFooterView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:AttributesIdentifier];
+        
+        headerView.delegate = self;
+        headerView.recipe = _recipe;
+        
+        return headerView;
+    }
     
-    UIImageView *headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.f, 10.f, 180.f, 180.f)];
-    headerImageView.layer.cornerRadius = 90.f;
-    headerImageView.layer.masksToBounds = YES;
-    headerImageView.center = CGPointMake(160.f, headerImageView.center.y);
-    
-    [_recipe setPhotoInImageView:headerImageView];
-    
-    [headerView addSubview:headerImageView];
-    
-    return headerView;
+    return [super tableView:tableView viewForHeaderInSection:section];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.row) {
+    
+    switch (indexPath.section) {
         case 0:
-            return 50.f;
-        
+            switch (indexPath.row) {
+                case 0:
+                    return 200.f;
+            }
+            break;
+        case 1:
+            switch (indexPath.row) {
+                case 2:
+                    return 200.f;
+            }
     }
+    
     return [super tableView:tableView heightForRowAtIndexPath:indexPath];
 }
 
@@ -100,19 +118,29 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [_fields count];
+    switch (section) {
+        case 0:
+            return [_fieldsFirstSection count];
+        case 1:
+            return [_fieldsSecondSection count];
+    }
+    
+    return 0;
 }
 
 - (NSString *)identifierForIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.row) {
+    switch (indexPath.section) {
         case 0:
-            return AttributesIdentifier;
+            switch (indexPath.row) {
+                case 0:
+                    return ImageViewIdentifier;
+            }
     }
     return TextViewIdentifier;
 }
@@ -122,19 +150,24 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[self identifierForIndexPath:indexPath] forIndexPath:indexPath];
     
     // Configure the cell...
-    switch (indexPath.row) {
+    switch (indexPath.section) {
         case 0:
-            ((AttributesTableViewCell *)cell).delegate = self;
-            ((AttributesTableViewCell *)cell).recipe = _recipe;
+            ((RecipePhotoTableViewCell *)cell).recipe = _recipe;
             break;
         case 1:
-            cell.textLabel.text = [_recipe name];
-            break;
-        case 2:
-            cell.textLabel.text = [_recipe recipeDescription];
-            break;
-        case 3:
-            cell.textLabel.text = [_recipe instructions];
+            ((TextViewTableViewCell *)cell).infoLabel.text = [_fieldsSecondSection objectAtIndex:indexPath.row];
+            
+            switch (indexPath.row) {
+                case 0:
+                    cell.textLabel.text = [_recipe name];
+                    break;
+                case 1:
+                    cell.textLabel.text = [_recipe recipeDescription];
+                    break;
+                case 2:
+                    cell.textLabel.text = [_recipe instructions];
+                    break;
+            }
             break;
     }
     
@@ -181,9 +214,9 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
 */
 
 #pragma mark -
-#pragma mark - AttributesTableViewCellDelegate delegate methods
+#pragma mark - AttributesTableViewHeaderFooterViewDelegate delegate methods
 
-- (void)didPressFavoriteButtonInCell:(AttributesTableViewCell *)cell {
+- (void)didPressFavoriteButtonInHeaderFooterView:(AttributesTableViewHeaderFooterView *)headerFooterView {
     if ([self.delegate respondsToSelector:@selector(didPressFavoriteButtonWithRecipe:)]) {
         [self.delegate didPressFavoriteButtonWithRecipe:_recipe];
     }

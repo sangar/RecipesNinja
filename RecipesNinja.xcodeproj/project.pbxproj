@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1A211F5D79A74511A329D32A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E45BFC5275F44FFA686BC19 /* libPods.a */; };
+		C3420CEE18DA0BF300ADF1A6 /* RecipePhotoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C3420CED18DA0BF300ADF1A6 /* RecipePhotoTableViewCell.m */; };
 		C348CC2018D794730031A043 /* Localization.strings in Resources */ = {isa = PBXBuildFile; fileRef = C348CC2218D794730031A043 /* Localization.strings */; };
-		C348CC2518D795840031A043 /* AttributesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C348CC2418D795840031A043 /* AttributesTableViewCell.m */; };
+		C348CC2518D795840031A043 /* AttributesTableViewHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = C348CC2418D795840031A043 /* AttributesTableViewHeaderFooterView.m */; };
 		C348CC2918D795BC0031A043 /* TextViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C348CC2818D795BC0031A043 /* TextViewTableViewCell.m */; };
 		C34B70D018D4F7D3007D12D4 /* RecipeDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C34B70CF18D4F7D3007D12D4 /* RecipeDetailViewController.m */; };
 		C356D2CD18D5BDD80015DE2A /* CoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C356D2CC18D5BDD80015DE2A /* CoreDataHelper.m */; };
@@ -53,9 +54,11 @@
 /* Begin PBXFileReference section */
 		8E45BFC5275F44FFA686BC19 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5D11F6BC6034BD9959A4AD1 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		C3420CEC18DA0BF300ADF1A6 /* RecipePhotoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecipePhotoTableViewCell.h; sourceTree = "<group>"; };
+		C3420CED18DA0BF300ADF1A6 /* RecipePhotoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipePhotoTableViewCell.m; sourceTree = "<group>"; };
 		C348CC2118D794730031A043 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localization.strings; sourceTree = "<group>"; };
-		C348CC2318D795840031A043 /* AttributesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttributesTableViewCell.h; sourceTree = "<group>"; };
-		C348CC2418D795840031A043 /* AttributesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttributesTableViewCell.m; sourceTree = "<group>"; };
+		C348CC2318D795840031A043 /* AttributesTableViewHeaderFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttributesTableViewHeaderFooterView.h; sourceTree = "<group>"; };
+		C348CC2418D795840031A043 /* AttributesTableViewHeaderFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttributesTableViewHeaderFooterView.m; sourceTree = "<group>"; };
 		C348CC2718D795BC0031A043 /* TextViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewTableViewCell.h; sourceTree = "<group>"; };
 		C348CC2818D795BC0031A043 /* TextViewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewTableViewCell.m; sourceTree = "<group>"; };
 		C348CC2A18D7B0760031A043 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -134,10 +137,12 @@
 		C348CC2618D7958F0031A043 /* DetailTableViewCells */ = {
 			isa = PBXGroup;
 			children = (
-				C348CC2318D795840031A043 /* AttributesTableViewCell.h */,
-				C348CC2418D795840031A043 /* AttributesTableViewCell.m */,
+				C348CC2318D795840031A043 /* AttributesTableViewHeaderFooterView.h */,
+				C348CC2418D795840031A043 /* AttributesTableViewHeaderFooterView.m */,
 				C348CC2718D795BC0031A043 /* TextViewTableViewCell.h */,
 				C348CC2818D795BC0031A043 /* TextViewTableViewCell.m */,
+				C3420CEC18DA0BF300ADF1A6 /* RecipePhotoTableViewCell.h */,
+				C3420CED18DA0BF300ADF1A6 /* RecipePhotoTableViewCell.m */,
 			);
 			name = DetailTableViewCells;
 			sourceTree = "<group>";
@@ -415,8 +420,9 @@
 				C348CC2918D795BC0031A043 /* TextViewTableViewCell.m in Sources */,
 				C3F2A17818D73A4F00D94029 /* _Recipe.m in Sources */,
 				C3F2A17E18D73D5C00D94029 /* StringHelper.m in Sources */,
+				C3420CEE18DA0BF300ADF1A6 /* RecipePhotoTableViewCell.m in Sources */,
 				C356D2CD18D5BDD80015DE2A /* CoreDataHelper.m in Sources */,
-				C348CC2518D795840031A043 /* AttributesTableViewCell.m in Sources */,
+				C348CC2518D795840031A043 /* AttributesTableViewHeaderFooterView.m in Sources */,
 				C3ECFA3518D231E6006598FC /* RecipesTableViewCell.m in Sources */,
 				C3EAAEA718D0A8F30097AE02 /* main.m in Sources */,
 				C34B70D018D4F7D3007D12D4 /* RecipeDetailViewController.m in Sources */,

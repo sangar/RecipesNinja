@@ -15,19 +15,20 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
+        _infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.f, 5.f, 320.f, 21.f)];
+        _infoLabel.backgroundColor = [UIColor clearColor];
+        _infoLabel.font = [UIFont systemFontOfSize:12.f];
+        
         self.textLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:22.f];
+        
+        [self.contentView addSubview:_infoLabel];
     }
     return self;
 }
 
-- (void)awakeFromNib
-{
-    // Initialization code
-}
-
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
-    [super setSelected:selected animated:animated];
+//    [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
 }

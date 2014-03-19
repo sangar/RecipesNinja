@@ -10,4 +10,6 @@
 
 @interface TextViewTableViewCell : UITableViewCell
 
+@property (nonatomic, strong) UILabel *infoLabel;
+
 @end

@@ -1,14 +1,14 @@
 //
-//  AttributesTableViewCell.m
+//  AttributesTableViewHeaderFooterView.m
 //  RecipesNinja
 //
 //  Created by Gard Sandholt on 17/03/14.
 //  Copyright (c) 2014 GaSa Media. All rights reserved.
 //
 
-#import "AttributesTableViewCell.h"
+#import "AttributesTableViewHeaderFooterView.h"
 
-@interface AttributesTableViewCell()
+@interface AttributesTableViewHeaderFooterView()
 
 @property (nonatomic, strong) UIButton *favRecipeButton;
 @property (nonatomic, strong) UILabel *difficultyLabel;
@@ -17,11 +17,11 @@
 
 @end
 
-@implementation AttributesTableViewCell
+@implementation AttributesTableViewHeaderFooterView
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (id)initWithReuseIdentifier:(NSString *)reuseIdentifier
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    self = [super initWithReuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
         
@@ -59,8 +59,8 @@
 }
 
 - (void)favRecipeButtonPressed:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(didPressFavoriteButtonInCell:)]) {
-        [self.delegate didPressFavoriteButtonInCell:self];
+    if ([self.delegate respondsToSelector:@selector(didPressFavoriteButtonInHeaderFooterView:)]) {
+        [self.delegate didPressFavoriteButtonInHeaderFooterView:self];
     }
 }
 

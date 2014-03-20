@@ -16,12 +16,13 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
-        _infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.f, 5.f, 320.f, 21.f)];
+        _infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.f, 5.f, 300.f, 21.f)];
         _infoLabel.backgroundColor = [UIColor clearColor];
         _infoLabel.font = [UIFont systemFontOfSize:12.f];
         
         _textView = [[UITextView alloc] initWithFrame:CGRectMake(0.f, 21.f, 320.f, 84.f)];
         _textView.userInteractionEnabled = NO;
+        _textView.backgroundColor = [UIColor clearColor];
         
         [self.contentView addSubview:_infoLabel];
         [self.contentView addSubview:_textView];
@@ -29,8 +30,7 @@
     return self;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
 //    [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
@@ -39,7 +39,14 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     
-    NSLog(@"%@ Set editing", NSStringFromClass([self class]));
+//    if (editing) {
+//        [UIView animateKeyframesWithDuration:1.5
+//                                       delay:0.0
+//                                     options:UIViewKeyframeAnimationOptionAutoreverse|UIViewKeyframeAnimationOptionRepeat
+//                                  animations:^{
+//                                      self.contentView.backgroundColor = [UIColor yellowColor];
+//                                  } completion:nil];
+//    }
 }
 
 @end

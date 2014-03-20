@@ -10,6 +10,7 @@
 #import "AttributesTableViewHeaderFooterView.h"
 #import "TextViewTableViewCell.h"
 #import "RecipePhotoTableViewCell.h"
+#import "GSComposeInputView.h"
 
 @interface RecipeDetailViewController () <AttributesTableViewHeaderFooterViewDelegate>
 
@@ -51,7 +52,7 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
     self.title = [_recipe name];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-
+    self.tableView.allowsSelectionDuringEditing = YES;
     
     [self.tableView registerClass:[AttributesTableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:AttributesIdentifier];
     
@@ -199,10 +200,20 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
-    return YES;
+    switch (indexPath.section) {
+        case 1:
+            return YES;
+    }
+    return NO;
 }
 
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleNone;
+}
 
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
+}
 
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -212,7 +223,8 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
 //        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 //    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
 //        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-//    }   
+//    }
+    NSLog(@"commitEditingStyle");
 }
 
 /*
@@ -230,6 +242,40 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
     return YES;
 }
 */
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSLog(@"didSelectRowAtIndexPath");
+    
+    if (tableView.isEditing) {
+        
+        NSLog(@"TableView is editing");
+        
+        switch (indexPath.section) {
+            case 1:
+                
+                switch (indexPath.row) {
+                    case 0:
+                        [GSComposeInputView showText:[_recipe name] withCompletionBlock:^(NSString *text) {
+                            NSLog(@"Got text from compose view: %@", text);
+                        }];
+                        break;
+                    case 1:
+                        [GSComposeInputView showText:[_recipe recipeDescription] withCompletionBlock:^(NSString *text) {
+                            NSLog(@"Got text from compose view: %@", text);
+                        }];
+                        break;
+                    case 2:
+                        [GSComposeInputView showText:[_recipe instructions] withCompletionBlock:^(NSString *text) {
+                            NSLog(@"Got text from compose view: %@", text);
+                        }];
+                        break;
+                }
+                
+                break;
+        }
+    }
+}
 
 #pragma mark -
 #pragma mark - AttributesTableViewHeaderFooterViewDelegate delegate methods

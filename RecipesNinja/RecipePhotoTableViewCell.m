@@ -26,6 +26,7 @@
         _headerImageView.layer.cornerRadius = 90.f;
         _headerImageView.layer.masksToBounds = YES;
         _headerImageView.center = CGPointMake(160.f, _headerImageView.center.y);
+        _headerImageView.backgroundColor = [UIColor clearColor];
         
         [self.contentView addSubview:_headerImageView];
     }
@@ -38,17 +39,15 @@
     [recipe setPhotoInImageView:_headerImageView];
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-//    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
-
-- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
-    [super setEditing:editing animated:animated];
-    
-    NSLog(@"%@ Set editing", NSStringFromClass([self class]));
-}
+//- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+//{
+////    [super setSelected:selected animated:animated];
+//
+//    // Configure the view for the selected state
+//}
+//
+//- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+//    [super setEditing:editing animated:animated];
+//}
 
 @end

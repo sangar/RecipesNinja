@@ -1,4 +1,4 @@
-// GSComposeInputView.h
+// GSComposeView.h
 //
 // Copyright (c) 2014 Gard Sandholt
 //
@@ -22,9 +22,8 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol GSComposeInputViewDelegate;
 
-@interface GSComposeInputView : UIView
+@interface GSComposeView : UIView
 
 + (void)showText:(NSString *)text withCompletionBlock:(void (^)(NSString *text))completionBlock;
 + (void)showWithCompletionBlock:(void (^)(NSString *text))completionBlock;

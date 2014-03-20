@@ -10,7 +10,7 @@
 #import "AttributesTableViewHeaderFooterView.h"
 #import "TextViewTableViewCell.h"
 #import "RecipePhotoTableViewCell.h"
-#import "GSComposeInputView.h"
+#import "GSComposeView.h"
 
 @interface RecipeDetailViewController () <AttributesTableViewHeaderFooterViewDelegate>
 
@@ -256,19 +256,34 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
                 
                 switch (indexPath.row) {
                     case 0:
-                        [GSComposeInputView showText:[_recipe name] withCompletionBlock:^(NSString *text) {
-                            NSLog(@"Got text from compose view: %@", text);
-                        }];
+                        {
+                            [GSComposeView showText:[_recipe name] withCompletionBlock:^(NSString *text) {
+                                NSLog(@"Got text from compose view: %@", text);
+                                [_recipe setName:text];
+//                                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                                [self.tableView reloadData];
+                            }];
+                        }
                         break;
                     case 1:
-                        [GSComposeInputView showText:[_recipe recipeDescription] withCompletionBlock:^(NSString *text) {
-                            NSLog(@"Got text from compose view: %@", text);
-                        }];
+                        {
+                            [GSComposeView showText:[_recipe recipeDescription] withCompletionBlock:^(NSString *text) {
+                                NSLog(@"Got text from compose view: %@", text);
+                                [_recipe setRecipeDescription:text];
+//                                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                                [self.tableView reloadData];
+                            }];
+                        }
                         break;
                     case 2:
-                        [GSComposeInputView showText:[_recipe instructions] withCompletionBlock:^(NSString *text) {
-                            NSLog(@"Got text from compose view: %@", text);
-                        }];
+                        {
+                            [GSComposeView showText:[_recipe instructions] withCompletionBlock:^(NSString *text) {
+                                NSLog(@"Got text from compose view: %@", text);
+                                [_recipe setInstructions:text];
+//                                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                                [self.tableView reloadData];
+                            }];
+                        }
                         break;
                 }
                 

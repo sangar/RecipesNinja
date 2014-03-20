@@ -1,4 +1,4 @@
-// GSComposeInputView.m
+// GSComposeView.m
 //
 // Copyright (c) 2014 Gard Sandholt
 //
@@ -20,14 +20,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "GSComposeInputView.h"
+#import "GSComposeView.h"
 #import <QuartzCore/QuartzCore.h>
 
 
 static CGFloat const kComposeViewWidth = 312.f;
 static CGFloat const kComposeViewHeight = 240.f;
 
-@interface GSComposeInputView ()
+@interface GSComposeView ()
 
 @property (copy, nonatomic) void (^completetionBlock)(NSString *text);
 
@@ -41,36 +41,36 @@ static CGFloat const kComposeViewHeight = 240.f;
 
 @end
 
-@implementation GSComposeInputView
+@implementation GSComposeView
 
 
 #pragma mark -
 #pragma mark Class methods
 
-+ (GSComposeInputView *)sharedView {
-    static GSComposeInputView *sharedView;
++ (GSComposeView *)sharedView {
+    static GSComposeView *sharedView;
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedView = [[GSComposeInputView alloc] initWithFrame:CGRectMake(0.f, 0.f, kComposeViewWidth, kComposeViewHeight)];
+        sharedView = [[GSComposeView alloc] initWithFrame:CGRectMake(0.f, 0.f, kComposeViewWidth, kComposeViewHeight)];
     });
     return sharedView;
 }
 
 + (void)showText:(NSString *)text withCompletionBlock:(void (^)(NSString *text))completionBlock {
-    [[GSComposeInputView sharedView] showText:text withCompletionBlock:completionBlock];
+    [[GSComposeView sharedView] showText:text withCompletionBlock:completionBlock];
 }
 
 + (void)showWithCompletionBlock:(void (^)(NSString *))completionBlock {
-    [[GSComposeInputView sharedView] showWithCompletionBlock:completionBlock];
+    [[GSComposeView sharedView] showWithCompletionBlock:completionBlock];
 }
 
 + (void)dismiss {
-    [[GSComposeInputView sharedView] dismiss];
+    [[GSComposeView sharedView] dismiss];
 }
 
 + (BOOL)isVisible {
-    return ([GSComposeInputView sharedView].alpha == 1.f);
+    return ([GSComposeView sharedView].alpha == 1.f);
 }
 
 
@@ -145,7 +145,7 @@ static CGFloat const kComposeViewHeight = 240.f;
     
     self.textInputView.text = text;
     
-    if (![GSComposeInputView isVisible]) {
+    if (![GSComposeView isVisible]) {
         [self showWithCompletionBlock:completionBlock];
     }
 }
@@ -171,7 +171,29 @@ static CGFloat const kComposeViewHeight = 240.f;
 #pragma mark -
 #pragma mark Button events methods
 
+- (void)resetButtonColors:(id)sender {
+    
+    UIButton *button = (UIButton *)sender;
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        button.backgroundColor = [UIColor clearColor];
+        button.titleLabel.textColor = [UIColor whiteColor];
+    }];
+}
+
+
+- (void)setButtonTouchColors:(UIButton *)button {
+    
+    button.backgroundColor = [UIColor whiteColor];
+    button.titleLabel.textColor = [UIColor blackColor];
+    
+}
+
+
 - (void)okButtonPressed:(id)sender {
+    
+    [self resetButtonColors:sender];
+    
     if (self.completetionBlock) {
         _completetionBlock([self.textInputView.text copy]);
     }
@@ -179,6 +201,9 @@ static CGFloat const kComposeViewHeight = 240.f;
 }
 
 - (void)cancelButtonPressed:(id)sender {
+    
+    [self resetButtonColors:sender];
+    
     [self dismiss];
 }
 
@@ -188,13 +213,15 @@ static CGFloat const kComposeViewHeight = 240.f;
 - (UIButton *)okButton {
     if (!_okButton) {
         _okButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _okButton.frame = CGRectMake(10.f, 8.f, 64.f, 28.f);
+        _okButton.frame = CGRectMake(kComposeViewWidth-74.f, 8.f, 64.f, 28.f);
         _okButton.layer.cornerRadius = 6.f;
         _okButton.layer.borderColor = [UIColor whiteColor].CGColor;
         _okButton.layer.borderWidth = 0.5f;
         _okButton.titleLabel.font = [UIFont boldSystemFontOfSize:12.f];
         [_okButton setTitle:NSLocalizedString(@"Ok", nil) forState:UIControlStateNormal];
+        [_okButton addTarget:self action:@selector(setButtonTouchColors:) forControlEvents:UIControlEventTouchDown];
         [_okButton addTarget:self action:@selector(okButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [_okButton addTarget:self action:@selector(resetButtonColors:) forControlEvents:UIControlEventTouchCancel];
     }
     return _okButton;
 }
@@ -202,13 +229,15 @@ static CGFloat const kComposeViewHeight = 240.f;
 - (UIButton *)cancelButton {
     if (!_cancelButton) {
         _cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _cancelButton.frame = CGRectMake(kComposeViewWidth-74.f, 8.f, 64.f, 28.f);
+        _cancelButton.frame = CGRectMake(10.f, 8.f, 64.f, 28.f);
         _cancelButton.layer.cornerRadius = 6.f;
         _cancelButton.layer.borderColor = [UIColor whiteColor].CGColor;
         _cancelButton.layer.borderWidth = 0.5f;
+        _cancelButton.titleLabel.font = [UIFont boldSystemFontOfSize:12.f];
         [_cancelButton setTitle:NSLocalizedString(@"Cancel", nil) forState:UIControlStateNormal];
+        [_cancelButton addTarget:self action:@selector(setButtonTouchColors:) forControlEvents:UIControlEventTouchDown];
         [_cancelButton addTarget:self action:@selector(cancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        
+        [_cancelButton addTarget:self action:@selector(resetButtonColors:) forControlEvents:UIControlEventTouchCancel];
     }
     return _cancelButton;
 }

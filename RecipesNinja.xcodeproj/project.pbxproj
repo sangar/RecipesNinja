@@ -14,7 +14,6 @@
 		C348CC2918D795BC0031A043 /* TextViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C348CC2818D795BC0031A043 /* TextViewTableViewCell.m */; };
 		C34B70D018D4F7D3007D12D4 /* RecipeDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C34B70CF18D4F7D3007D12D4 /* RecipeDetailViewController.m */; };
 		C356D2CD18D5BDD80015DE2A /* CoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C356D2CC18D5BDD80015DE2A /* CoreDataHelper.m */; };
-		C3C6243318DB827D00C1DBBB /* GSComposeView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3C6243218DB827D00C1DBBB /* GSComposeView.m */; };
 		C3EAAE9918D0A8F30097AE02 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3EAAE9818D0A8F30097AE02 /* Foundation.framework */; };
 		C3EAAE9B18D0A8F30097AE02 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3EAAE9A18D0A8F30097AE02 /* CoreGraphics.framework */; };
 		C3EAAE9D18D0A8F30097AE02 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3EAAE9C18D0A8F30097AE02 /* UIKit.framework */; };
@@ -69,8 +68,6 @@
 		C34B70CF18D4F7D3007D12D4 /* RecipeDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipeDetailViewController.m; sourceTree = "<group>"; };
 		C356D2CB18D5BDD80015DE2A /* CoreDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataHelper.h; sourceTree = "<group>"; };
 		C356D2CC18D5BDD80015DE2A /* CoreDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataHelper.m; sourceTree = "<group>"; };
-		C3C6243118DB827D00C1DBBB /* GSComposeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSComposeView.h; sourceTree = "<group>"; };
-		C3C6243218DB827D00C1DBBB /* GSComposeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSComposeView.m; sourceTree = "<group>"; };
 		C3EAAE9518D0A8F30097AE02 /* RecipesNinja.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecipesNinja.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3EAAE9818D0A8F30097AE02 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C3EAAE9A18D0A8F30097AE02 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -165,15 +162,6 @@
 			name = Helpers;
 			sourceTree = "<group>";
 		};
-		C3C6243018DB823A00C1DBBB /* GSComposeView */ = {
-			isa = PBXGroup;
-			children = (
-				C3C6243118DB827D00C1DBBB /* GSComposeView.h */,
-				C3C6243218DB827D00C1DBBB /* GSComposeView.m */,
-			);
-			name = GSComposeView;
-			sourceTree = "<group>";
-		};
 		C3EAAE8C18D0A8F30097AE02 = {
 			isa = PBXGroup;
 			children = (
@@ -211,7 +199,6 @@
 		C3EAAEA018D0A8F30097AE02 /* RecipesNinja */ = {
 			isa = PBXGroup;
 			children = (
-				C3C6243018DB823A00C1DBBB /* GSComposeView */,
 				C3F76DE418D1A49B00BC5467 /* AFNetworking */,
 				C356D2CA18D5BDBA0015DE2A /* Helpers */,
 				C3F76DEB18D1AAB000BC5467 /* CoreDataModels */,
@@ -439,7 +426,6 @@
 				C3ECFA3518D231E6006598FC /* RecipesTableViewCell.m in Sources */,
 				C3EAAEA718D0A8F30097AE02 /* main.m in Sources */,
 				C34B70D018D4F7D3007D12D4 /* RecipeDetailViewController.m in Sources */,
-				C3C6243318DB827D00C1DBBB /* GSComposeView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

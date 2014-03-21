@@ -140,14 +140,22 @@
                      }};
 }
 
+- (NSArray *)difficultyValues {
+    return @[
+             NSLocalizedString(@"Easy", nil),
+             NSLocalizedString(@"Intermediate", nil),
+             NSLocalizedString(@"Hard", nil)
+            ];
+}
+
 - (NSString *)difficultyToString {
     switch (self.difficultyValue) {
         case 1:
-            return NSLocalizedString(@"Easy", nil);
+            return [[self difficultyValues] objectAtIndex:0];
         case 2:
-            return NSLocalizedString(@"Intermediate", nil);
+            return [[self difficultyValues] objectAtIndex:1];
         case 3:
-            return NSLocalizedString(@"Hard", nil);
+            return [[self difficultyValues] objectAtIndex:2];
     }
     return NSLocalizedString(@"Unknown", nil);
 }

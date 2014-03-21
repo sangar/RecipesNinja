@@ -8,10 +8,12 @@
 
 #import "AttributesTableViewHeaderFooterView.h"
 
-@interface AttributesTableViewHeaderFooterView()
+@interface AttributesTableViewHeaderFooterView () <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (nonatomic, strong) UIButton *favRecipeButton;
-@property (nonatomic, strong) UILabel *difficultyLabel;
+@property (nonatomic, strong) UITextField *difficultyTextView;
+
+@property (nonatomic, strong) UIPickerView *difficultyPicker;
 
 - (void)favRecipeButtonPressed:(id)sender;
 
@@ -33,17 +35,27 @@
         UIView *divider = [[UIView alloc] initWithFrame:CGRectMake(320.f/2.f, 0.f, .5f, 50.f)];
         divider.backgroundColor = [UIColor blackColor];
         
-        _difficultyLabel = [[UILabel alloc] initWithFrame:CGRectMake(320.f/2.f, 0.f, 160.f, 50.f)];
-        _difficultyLabel.backgroundColor = [UIColor clearColor];
-        _difficultyLabel.adjustsFontSizeToFitWidth = YES;
-        _difficultyLabel.textAlignment = NSTextAlignmentCenter;
+        _difficultyTextView = [[UITextField alloc] initWithFrame:CGRectMake(320.f/2.f, 0.f, 160.f, 50.f)];
+        _difficultyTextView.backgroundColor = [UIColor clearColor];
+        _difficultyTextView.adjustsFontSizeToFitWidth = YES;
+        _difficultyTextView.textAlignment = NSTextAlignmentCenter;
+        _difficultyTextView.inputView = self.difficultyPicker;
+        _difficultyTextView.delegate = self;
         
         [self.contentView addSubview:_favRecipeButton];
         [self.contentView addSubview:divider];
-        [self.contentView addSubview:_difficultyLabel];
+        [self.contentView addSubview:_difficultyTextView];
     }
     
     return self;
+}
+
+- (UIPickerView *)difficultyPicker {
+    if (!_difficultyPicker) {
+        _difficultyPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0.f, 0.f, 320.f, 120.f)];
+        
+    }
+    return _difficultyPicker;
 }
 
 - (void)setRecipe:(Recipe *)recipe {
@@ -55,7 +67,7 @@
         [_favRecipeButton setImage:[UIImage imageNamed:@"star_unsel"] forState:UIControlStateNormal];
     }
     
-    _difficultyLabel.text = recipe.difficultyToString;
+    _difficultyTextView.text = recipe.difficultyToString;
 }
 
 - (void)favRecipeButtonPressed:(id)sender {
@@ -69,6 +81,34 @@
 //    [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+
+#pragma mark - UITextField delegate methods
+
+//- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
+//    return NO;
+//}
+
+#pragma mark - UIPickerView data source
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return [[_recipe difficultyValues] count];
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    return 1;
+}
+
+#pragma mark - UIPickerView delegate
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    return [[_recipe difficultyValues] objectAtIndex:row];
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    _recipe.difficultyValue = ((int)row+1);
+    _difficultyTextView.text = [[_recipe difficultyValues] objectAtIndex:row];
 }
 
 @end

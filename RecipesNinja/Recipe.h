@@ -13,6 +13,7 @@
 // Get methods
 - (NSDictionary *)parameters;
 
+- (NSArray *)difficultyValues;
 - (NSString *)difficultyToString;
 
 + (UIFont *)fontForName;

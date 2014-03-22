@@ -39,7 +39,7 @@
         _difficultyTextView.backgroundColor = [UIColor clearColor];
         _difficultyTextView.adjustsFontSizeToFitWidth = YES;
         _difficultyTextView.textAlignment = NSTextAlignmentCenter;
-        _difficultyTextView.inputView = self.difficultyPicker;
+//        _difficultyTextView.inputView = self.difficultyPicker;
         _difficultyTextView.delegate = self;
         
         [self.contentView addSubview:_favRecipeButton];
@@ -52,9 +52,13 @@
 
 - (UIPickerView *)difficultyPicker {
     if (!_difficultyPicker) {
-        _difficultyPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0.f, 0.f, 320.f, 120.f)];
-        
+        _difficultyPicker = [[UIPickerView alloc] initWithFrame:CGRectZero];
+        _difficultyPicker.dataSource = self;
+        _difficultyPicker.delegate = self;
+        _difficultyPicker.showsSelectionIndicator = YES;
+//        _difficultyPicker.backgroundColor = [UIColor clearColor];
     }
+    
     return _difficultyPicker;
 }
 
@@ -86,18 +90,25 @@
 
 #pragma mark - UITextField delegate methods
 
-//- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
-//    return NO;
-//}
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    
+    UIPickerView *pickerView = self.difficultyPicker;
+    
+    [pickerView selectRow:_recipe.difficultyValue+1 inComponent:0 animated:NO];
+    
+    textField.inputView=pickerView;
+    
+    return YES;
+}
 
 #pragma mark - UIPickerView data source
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return [[_recipe difficultyValues] count];
+    return 1;
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    return 1;
+    return [[_recipe difficultyValues] count];
 }
 
 #pragma mark - UIPickerView delegate

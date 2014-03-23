@@ -45,6 +45,17 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
     [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
 }
 
+- (void)addNewRecipe {
+    
+    RecipeDetailViewController *rdvc = [[RecipeDetailViewController alloc] initWithStyle:UITableViewStylePlain];
+    rdvc.delegate = self;
+    rdvc.viewControllerType = RecipeDetailViewControllerTypeNew;
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:rdvc];
+    
+    [self.navigationController presentViewController:navController animated:YES completion:nil];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -60,6 +71,7 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
     [_fetchedResultsController performFetch:nil];
 
     
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewRecipe)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reloadData)];
     
     
@@ -73,6 +85,7 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 #pragma mark -
 #pragma mark - self methods
@@ -150,6 +163,7 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
     RecipeDetailViewController *rdvc = [[RecipeDetailViewController alloc] initWithStyle:UITableViewStylePlain];
     rdvc.recipe = recipe;
     rdvc.delegate = self;
+    rdvc.viewControllerType = RecipeDetailViewControllerTypeEditing;
     
     [self.navigationController pushViewController:rdvc animated:YES];
 }

@@ -20,6 +20,23 @@
 
 #pragma mark - Initializers
 
++ (Recipe *)newRecipe {
+    
+    NSManagedObjectContext *context = [CoreDataHelper managedObjectContext];
+    
+    Recipe *recipe = [Recipe insertInManagedObjectContext:context];
+    
+    recipe.rid = nil;
+    recipe.name = @"";
+    recipe.recipeDescription = @"";
+    recipe.instructions = @"";
+    recipe.favorite = [NSNumber numberWithInteger:0];
+    recipe.difficulty = [NSNumber numberWithInteger:1];
+    recipe.photoURL = nil;
+    
+    return recipe;
+}
+
 + (Recipe *)recipeFromAttributes:(NSDictionary *)attributes {
     
     NSManagedObjectContext *context = [CoreDataHelper managedObjectContext];
@@ -73,10 +90,9 @@
     if (self.rid != nil) {
         return [self updateWithBlock:block];
     } else {
-        return [[HyperAPIClient sharedClient] POST:@"recipes" parameters:[self parameters] success:^(NSURLSessionDataTask *task, id responseObject) {
-            
-            // TODO: send multipart with image
-            
+        return [[HyperAPIClient sharedClient] POST:@"recipes" parameters:[self parameters] constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+            [formData appendPartWithFileData:self.photo name:@"photo" fileName:@"photo.jpg" mimeType:@"photo/jpeg"];
+        } success:^(NSURLSessionDataTask *task, id responseObject) {
             NSLog(@"Saved response: %@", responseObject);
             
             if (block) {

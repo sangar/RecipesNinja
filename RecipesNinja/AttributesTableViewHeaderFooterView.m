@@ -33,14 +33,27 @@
         [_favRecipeButton addTarget:self action:@selector(favRecipeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         
         UIView *divider = [[UIView alloc] initWithFrame:CGRectMake(320.f/2.f, 0.f, .5f, 50.f)];
-        divider.backgroundColor = [UIColor blackColor];
+        divider.backgroundColor = [UIColor colorWithRed:.9f green:.9f blue:.9f alpha:1.f];
         
         _difficultyTextView = [[UITextField alloc] initWithFrame:CGRectMake(320.f/2.f, 0.f, 160.f, 50.f)];
         _difficultyTextView.backgroundColor = [UIColor clearColor];
+        _difficultyTextView.tintColor = [UIColor clearColor];
         _difficultyTextView.adjustsFontSizeToFitWidth = YES;
         _difficultyTextView.textAlignment = NSTextAlignmentCenter;
 //        _difficultyTextView.inputView = self.difficultyPicker;
         _difficultyTextView.delegate = self;
+        
+        UIToolbar* keyboardDoneButtonView = [[UIToolbar alloc] init];
+        keyboardDoneButtonView.barStyle	= UIBarStyleBlack;
+        keyboardDoneButtonView.translucent = YES;
+        keyboardDoneButtonView.tintColor = nil;
+        [keyboardDoneButtonView sizeToFit];
+        
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(toolbarDoneButtonPressed:)];
+        UIBarButtonItem *flexibleSpace    = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+        
+        [keyboardDoneButtonView setItems:@[flexibleSpace,doneButton]];
+        self.difficultyTextView.inputAccessoryView = keyboardDoneButtonView;
         
         [self.contentView addSubview:_favRecipeButton];
         [self.contentView addSubview:divider];
@@ -48,6 +61,10 @@
     }
     
     return self;
+}
+
+- (void)toolbarDoneButtonPressed:(id)sender {
+    [self.difficultyTextView resignFirstResponder];
 }
 
 - (UIPickerView *)difficultyPicker {
@@ -94,7 +111,7 @@
     
     UIPickerView *pickerView = self.difficultyPicker;
     
-    [pickerView selectRow:_recipe.difficultyValue+1 inComponent:0 animated:NO];
+    [pickerView selectRow:(_recipe.difficultyValue-1) inComponent:0 animated:NO];
     
     textField.inputView=pickerView;
     

@@ -93,7 +93,7 @@
 
     if (selected) {
         // Configure the view for the selected state
-        [UIView animateWithDuration:1.0
+        [UIView animateWithDuration:0.1
                               delay:0.0
                             options:UIViewAnimationOptionAutoreverse|UIViewAnimationOptionCurveEaseInOut
                          animations:^{

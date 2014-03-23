@@ -11,6 +11,8 @@
 #import "TextViewTableViewCell.h"
 #import "RecipePhotoTableViewCell.h"
 #import "GSComposeView.h"
+#import "CoreDataHelper.h"
+#import "UIAlertView+AFNetworking.h"
 
 @interface RecipeDetailViewController () <AttributesTableViewHeaderFooterViewDelegate>
 
@@ -31,25 +33,55 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+        self.viewControllerType = RecipeDetailViewControllerTypeNew;
     }
     return self;
+}
+
+- (void)saveRecipe {
+    NSURLSessionDataTask *task = [_recipe saveWithBlock:^(BOOL saved, NSError *error) {
+        if (!error) {
+            [_recipe save];
+            [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+        }
+    }];
+    
+    [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
+}
+
+- (void)cancelNewRecipe {
+    [[CoreDataHelper managedObjectContext] rollback];
+    
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    switch (_viewControllerType) {
+        case RecipeDetailViewControllerTypeNew:
+            [self setEditing:YES];
+            
+            self.recipe = [Recipe newRecipe];
+            
+            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveRecipe)];
+            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelNewRecipe)];
+            
+            self.title = NSLocalizedString(@"New recipe", nil);
+            
+            break;
+        case RecipeDetailViewControllerTypeEditing:
+            
+            self.navigationItem.rightBarButtonItem = self.editButtonItem;
+            
+            self.title = [_recipe name];
+            
+            break;
+    }
     
     _fieldsFirstSection = @[@"photo"];
     _fieldsSecondSection = @[NSLocalizedString(@"Name", nil), NSLocalizedString(@"Description", nil), NSLocalizedString(@"Instructions", nil)];
-    
-    
-    self.title = [_recipe name];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.allowsSelectionDuringEditing = YES;
@@ -60,12 +92,31 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
     [self.tableView registerClass:[TextViewTableViewCell class] forCellReuseIdentifier:TextViewIdentifier];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self.tableView reloadData];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    [super setEditing:editing animated:animated];
+    
+    if (!editing) {
+        if ([_recipe hasChanges]) {
+            [_recipe saveWithBlock:^(BOOL saved, NSError *error) {
+                if (!error) {
+                    [_recipe save];
+                }
+            }];
+        }
+    }
+}
 
 #pragma mark -
 #pragma mark - Table view delegate methods
@@ -117,7 +168,54 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
     return [super tableView:tableView heightForRowAtIndexPath:indexPath];
 }
 
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSLog(@"didSelectRowAtIndexPath");
+    
+    if (tableView.isEditing) {
+        
+        NSLog(@"TableView is editing");
+        
+        switch (indexPath.section) {
+            case 1:
+                
+                switch (indexPath.row) {
+                    case 0:
+                    {
+                        [GSComposeView showText:[_recipe name] withCompletionBlock:^(NSString *text) {
+                            NSLog(@"Got text from compose view: %@", text);
+                            [_recipe setName:text];
+                            //                                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                            [self.tableView reloadData];
+                        }];
+                    }
+                        break;
+                    case 1:
+                    {
+                        [GSComposeView showText:[_recipe recipeDescription] withCompletionBlock:^(NSString *text) {
+                            NSLog(@"Got text from compose view: %@", text);
+                            [_recipe setRecipeDescription:text];
+                            //                                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                            [self.tableView reloadData];
+                        }];
+                    }
+                        break;
+                    case 2:
+                    {
+                        [GSComposeView showText:[_recipe instructions] withCompletionBlock:^(NSString *text) {
+                            NSLog(@"Got text from compose view: %@", text);
+                            [_recipe setInstructions:text];
+                            //                                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                            [self.tableView reloadData];
+                        }];
+                    }
+                        break;
+                }
+                
+                break;
+        }
+    }
+}
 
 
 #pragma mark -
@@ -143,12 +241,8 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
 }
 
 - (NSString *)identifierForIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.section) {
-        case 0:
-            switch (indexPath.row) {
-                case 0:
-                    return ImageViewIdentifier;
-            }
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        return ImageViewIdentifier;
     }
     return TextViewIdentifier;
 }
@@ -243,59 +337,18 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
 }
 */
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    NSLog(@"didSelectRowAtIndexPath");
-    
-    if (tableView.isEditing) {
-        
-        NSLog(@"TableView is editing");
-        
-        switch (indexPath.section) {
-            case 1:
-                
-                switch (indexPath.row) {
-                    case 0:
-                        {
-                            [GSComposeView showText:[_recipe name] withCompletionBlock:^(NSString *text) {
-                                NSLog(@"Got text from compose view: %@", text);
-                                [_recipe setName:text];
-//                                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-                                [self.tableView reloadData];
-                            }];
-                        }
-                        break;
-                    case 1:
-                        {
-                            [GSComposeView showText:[_recipe recipeDescription] withCompletionBlock:^(NSString *text) {
-                                NSLog(@"Got text from compose view: %@", text);
-                                [_recipe setRecipeDescription:text];
-//                                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-                                [self.tableView reloadData];
-                            }];
-                        }
-                        break;
-                    case 2:
-                        {
-                            [GSComposeView showText:[_recipe instructions] withCompletionBlock:^(NSString *text) {
-                                NSLog(@"Got text from compose view: %@", text);
-                                [_recipe setInstructions:text];
-//                                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-                                [self.tableView reloadData];
-                            }];
-                        }
-                        break;
-                }
-                
-                break;
-        }
-    }
-}
 
 #pragma mark -
 #pragma mark - AttributesTableViewHeaderFooterViewDelegate delegate methods
 
 - (void)didPressFavoriteButtonInHeaderFooterView:(AttributesTableViewHeaderFooterView *)headerFooterView {
+    
+    if (_viewControllerType == RecipeDetailViewControllerTypeNew) {
+        _recipe.favoriteValue = !_recipe.favoriteValue;
+        [self.tableView reloadData];
+        return;
+    }
+    
     if ([self.delegate respondsToSelector:@selector(didPressFavoriteButtonWithRecipe:)]) {
         [self.delegate didPressFavoriteButtonWithRecipe:_recipe];
     }

@@ -3,6 +3,7 @@
 @interface Recipe : _Recipe {}
 
 // Initializer
++ (Recipe *)newRecipe;
 + (Recipe *)recipeFromAttributes:(NSDictionary *)attributes;
 
 // Network methods

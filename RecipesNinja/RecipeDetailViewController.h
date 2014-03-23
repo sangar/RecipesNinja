@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "Recipe.h"
 
+
+typedef NS_ENUM(NSInteger, RecipeDetailViewControllerType) {
+    RecipeDetailViewControllerTypeNew = 0,
+    RecipeDetailViewControllerTypeEditing
+};
+
 @protocol RecipeDetailViewControllerDelegate;
 
 
@@ -16,6 +22,8 @@
 
 @property (nonatomic, strong) Recipe *recipe;
 @property (nonatomic, assign) id<RecipeDetailViewControllerDelegate> delegate;
+
+@property (nonatomic, assign) RecipeDetailViewControllerType viewControllerType;
 
 @end
 

@@ -10,7 +10,6 @@
 @interface Recipe ()
 
 // Private interface goes here.
-- (NSURLSessionDataTask *)updateWithBlock:(void (^)(BOOL updated, NSError *error))block;
 
 @end
 
@@ -26,13 +25,13 @@
     
     Recipe *recipe = [Recipe insertInManagedObjectContext:context];
     
-    recipe.rid = nil;
-    recipe.name = @"";
-    recipe.recipeDescription = @"";
+    recipe.ridValue = [Recipe nextRecipeID];
+    recipe.name = @"Testing recipe";
+    recipe.recipeDescription = @"Testing description";
     recipe.instructions = @"";
     recipe.favorite = [NSNumber numberWithInteger:0];
     recipe.difficulty = [NSNumber numberWithInteger:1];
-    recipe.photoURL = nil;
+    recipe.photoURL = @"";
     
     return recipe;
 }
@@ -87,23 +86,20 @@
 }
 
 - (NSURLSessionDataTask *)saveWithBlock:(void (^)(BOOL saved, NSError *error))block {
-    if (self.rid != nil) {
-        return [self updateWithBlock:block];
-    } else {
-        return [[HyperAPIClient sharedClient] POST:@"recipes" parameters:[self parameters] constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-            [formData appendPartWithFileData:self.photo name:@"photo" fileName:@"photo.jpg" mimeType:@"photo/jpeg"];
-        } success:^(NSURLSessionDataTask *task, id responseObject) {
-            NSLog(@"Saved response: %@", responseObject);
-            
-            if (block) {
-                block(YES, nil);
-            }
-        } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            if (block) {
-                block(NO, error);
-            }
-        }];
-    }
+   
+    return [[HyperAPIClient sharedClient] POST:@"recipes" parameters:[self parameters] constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        [formData appendPartWithFileData:self.photo name:@"recipe[photo]" fileName:@"photo.jpg" mimeType:@"photo/jpeg"];
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSLog(@"Saved response: %@", responseObject);
+        
+        if (block) {
+            block(YES, nil);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if (block) {
+            block(NO, error);
+        }
+    }];
 }
 
 - (NSURLSessionDataTask *)updateWithBlock:(void (^)(BOOL updated, NSError *error))block {
@@ -112,8 +108,6 @@
     NSDictionary *params = [self parameters];
     
     return [[HyperAPIClient sharedClient] PUT:URLPath parameters:params success:^(NSURLSessionDataTask *task, id responseObject) {
-        
-        // TODO: send multipart with image
         
         if (block) {
             block(YES, nil);
@@ -154,6 +148,22 @@
                      @"favorite": self.favorite,
                      @"difficulty": self.difficulty
                      }};
+}
+
++ (int32_t)nextRecipeID {
+
+    NSManagedObjectContext *context = [CoreDataHelper managedObjectContext];
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[Recipe entityName]];
+    request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"rid" ascending:NO selector:@selector(compare:)]];
+    
+    NSError *error = nil;
+    Recipe *recipe = [[context executeFetchRequest:request error:&error] firstObject];
+    if (recipe) {
+        return recipe.ridValue+1;
+    }
+    
+    return 1;
 }
 
 - (NSArray *)difficultyValues {
@@ -249,7 +259,7 @@ static CGFloat const kInfoLabelHeight = 21.f;
     self.instructions = [StringHelper stringFromPotetialNull:[attributes valueForKey:@"instructions"]];
     self.favorite = [NumberHelper numberFromPossibleNull:[attributes valueForKey:@"favorite"]];
     self.difficulty = [NumberHelper numberFromPossibleNull:[attributes valueForKey:@"difficulty"]];
-    self.photoURL = [attributes valueForKeyPath:@"photo.url"];
+    self.photoURL = [StringHelper stringFromPotetialNull:[attributes valueForKeyPath:@"photo.url"]];
     self.createdAt = [DateHelper ISO8601StringToDate:[attributes valueForKey:@"created_at"]];
     self.updatedAt = [DateHelper ISO8601StringToDate:[attributes valueForKey:@"updated_at"]];
     
@@ -266,6 +276,11 @@ static CGFloat const kInfoLabelHeight = 21.f;
 }
 
 - (BOOL)save {
+    return [CoreDataHelper saveContext];
+}
+
+- (BOOL)deleteObject {
+    [[CoreDataHelper managedObjectContext] deleteObject:self];
     return [CoreDataHelper saveContext];
 }
 

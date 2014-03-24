@@ -63,7 +63,7 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
     self.title = NSLocalizedString(@"Recipes", nil);
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:[Recipe entityName]];
-    fetchRequest.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"rid" ascending:YES selector:@selector(compare:)]];
+    fetchRequest.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"rid" ascending:NO selector:@selector(compare:)]];
     fetchRequest.returnsObjectsAsFaults = NO;
     
     _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[(id)[[UIApplication sharedApplication] delegate] managedObjectContext] sectionNameKeyPath:nil cacheName:nil];
@@ -95,7 +95,7 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
     recipe.favoriteValue = ![recipe favoriteValue];
     [GSProgressHUD popImage:[UIImage imageNamed:@"star"] withStatus:recipe.favoriteValue ? NSLocalizedString(@"Favorite", nil) : NSLocalizedString(@"NOT", nil)];
     
-    NSURLSessionDataTask *task = [recipe saveWithBlock:^(BOOL updated, NSError *error) {
+    NSURLSessionDataTask *task = [recipe updateWithBlock:^(BOOL updated, NSError *error) {
         if (!error) {
             [recipe save];
         }
@@ -139,10 +139,24 @@ static NSString *reuseIdentifier = @"ReuseIdentifier";
     if ([recipe favoriteValue]) {
         color = [UIColor colorWithRed:232.0 / 255.0 green:61.0 / 255.0 blue:14.0 / 255.0 alpha:1.0];
     }
+    
+    UIView *checkView2 = [self viewWithImageName:@"cross"];
 
     [cell setSwipeGestureWithView:checkView color:color mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
         
         [self favoriteRecipeAction:recipe];
+    }];
+    
+    [cell setSwipeGestureWithView:checkView2 color:[UIColor redColor] mode:MCSwipeTableViewCellModeExit state:MCSwipeTableViewCellState3 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
+        
+        [recipe deleteWithBlock:^(BOOL deleted, NSError *error) {
+            if (!error) {
+                
+                [GSProgressHUD popImage:[UIImage imageNamed:@"cross"] withStatus:NSLocalizedString(@"Deleted", nil)];
+                [recipe deleteObject];
+                [self reloadData];
+            }
+        }];
     }];
     
     return cell;

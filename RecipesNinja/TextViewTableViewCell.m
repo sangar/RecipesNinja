@@ -39,12 +39,18 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     
+//    self.contentView.layer.borderWidth = 0.f;
+//    self.contentView.layer.borderColor = [UIColor colorWithRed:0.f green:0.478f blue:1.f alpha:0.f].CGColor;
+    
+//    self.contentView.backgroundColor = [UIColor clearColor];
+//    
 //    if (editing) {
 //        [UIView animateKeyframesWithDuration:1.5
 //                                       delay:0.0
 //                                     options:UIViewKeyframeAnimationOptionAutoreverse|UIViewKeyframeAnimationOptionRepeat
 //                                  animations:^{
-//                                      self.contentView.backgroundColor = [UIColor yellowColor];
+////                                      self.contentView.layer.borderWidth = 5.f;
+//                                      self.contentView.backgroundColor = [UIColor colorWithRed:0.f green:0.478f blue:1.f alpha:.25f];
 //                                  } completion:nil];
 //    }
 }

@@ -8,11 +8,15 @@
 
 // Network methods
 + (NSURLSessionDataTask *)allWithBlock:(void (^)(NSArray *recipes, NSError *error))block;
+
 - (NSURLSessionDataTask *)saveWithBlock:(void (^)(BOOL saved, NSError *error))block;
+- (NSURLSessionDataTask *)updateWithBlock:(void (^)(BOOL updated, NSError *error))block;
 - (NSURLSessionDataTask *)deleteWithBlock:(void (^)(BOOL deleted, NSError *error))block;
 
 // Get methods
 - (NSDictionary *)parameters;
+
++ (int32_t)nextRecipeID;
 
 - (NSArray *)difficultyValues;
 - (NSString *)difficultyToString;
@@ -38,5 +42,6 @@
 
 // CoreData methods
 - (BOOL)save;
+- (BOOL)deleteObject;
 
 @end

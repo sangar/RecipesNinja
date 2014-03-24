@@ -14,10 +14,12 @@
 #import "CoreDataHelper.h"
 #import "UIAlertView+AFNetworking.h"
 
-@interface RecipeDetailViewController () <AttributesTableViewHeaderFooterViewDelegate>
+@interface RecipeDetailViewController () <AttributesTableViewHeaderFooterViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property(nonatomic, strong) NSArray *fieldsFirstSection;
 @property(nonatomic, strong) NSArray *fieldsSecondSection;
+
+@property(nonatomic, strong) UIImagePickerController *imagePickerController;
 
 @end
 
@@ -65,8 +67,8 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
             
             self.recipe = [Recipe newRecipe];
             
-            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveRecipe)];
-            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelNewRecipe)];
+            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelNewRecipe)];
+            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveRecipe)];
             
             self.title = NSLocalizedString(@"New recipe", nil);
             
@@ -109,7 +111,7 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
     
     if (!editing) {
         if ([_recipe hasChanges]) {
-            [_recipe saveWithBlock:^(BOOL saved, NSError *error) {
+            [_recipe updateWithBlock:^(BOOL saved, NSError *error) {
                 if (!error) {
                     [_recipe save];
                 }
@@ -177,6 +179,14 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
         NSLog(@"TableView is editing");
         
         switch (indexPath.section) {
+            case 0:
+                
+                _imagePickerController = [[UIImagePickerController alloc] init];
+                _imagePickerController.delegate = self;
+                
+                [self.navigationController presentViewController:_imagePickerController animated:YES completion:nil];
+                
+                break;
             case 1:
                 
                 switch (indexPath.row) {
@@ -185,7 +195,7 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
                         [GSComposeView showText:[_recipe name] withCompletionBlock:^(NSString *text) {
                             NSLog(@"Got text from compose view: %@", text);
                             [_recipe setName:text];
-                            //                                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//                                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
                             [self.tableView reloadData];
                         }];
                     }
@@ -195,7 +205,7 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
                         [GSComposeView showText:[_recipe recipeDescription] withCompletionBlock:^(NSString *text) {
                             NSLog(@"Got text from compose view: %@", text);
                             [_recipe setRecipeDescription:text];
-                            //                                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//                                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
                             [self.tableView reloadData];
                         }];
                     }
@@ -205,7 +215,7 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
                         [GSComposeView showText:[_recipe instructions] withCompletionBlock:^(NSString *text) {
                             NSLog(@"Got text from compose view: %@", text);
                             [_recipe setInstructions:text];
-                            //                                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//                                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
                             [self.tableView reloadData];
                         }];
                     }
@@ -260,7 +270,7 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
             ((TextViewTableViewCell *)cell).infoLabel.text = [_fieldsSecondSection objectAtIndex:indexPath.row];
             UITextView *cellTextView = ((TextViewTableViewCell *)cell).textView;
             
-            BOOL resize = YES;
+//            BOOL resize = YES;
             
             switch (indexPath.row) {
                 case 0:
@@ -272,15 +282,15 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
                 case 2:
                     ;
                     NSAttributedString *attrString = [_recipe attributedStringForInstructions];
-                    resize = [[attrString string] length] == 0 ? NO : YES;
+//                    resize = [[attrString string] length] == 0 ? NO : YES;
                     
                     cellTextView.attributedText = attrString;
                     break;
             }
             
-            if (resize) {
+//            if (resize) {
                 [cellTextView sizeToFit];
-            }
+//            }
             
             break;
     }
@@ -309,33 +319,29 @@ static NSString * const AttributesIdentifier = @"AttributesIdentifier";
     return NO;
 }
 
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-//    if (editingStyle == UITableViewCellEditingStyleDelete) {
-//        // Delete the row from the data source
-//        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-//        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-//    }
-    NSLog(@"commitEditingStyle");
+
+#pragma mark -
+#pragma mark - UIImagePickerController delegate methods
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo {
+
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    
+    UIImage *pickerImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    _recipe.photo = UIImageJPEGRepresentation(pickerImage, 0.0);
+    [self.tableView reloadData];
 }
-*/
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
 
 
 #pragma mark -

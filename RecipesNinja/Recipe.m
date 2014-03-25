@@ -87,6 +87,8 @@
 
 - (NSURLSessionDataTask *)saveWithBlock:(void (^)(BOOL saved, NSError *error))block {
    
+    NSLog(@"Saving object");
+    
     return [[HyperAPIClient sharedClient] POST:@"recipes" parameters:[self parameters] constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         [formData appendPartWithFileData:self.photo name:@"recipe[photo]" fileName:@"photo.jpg" mimeType:@"photo/jpeg"];
     } success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -102,21 +104,51 @@
     }];
 }
 
+
 - (NSURLSessionDataTask *)updateWithBlock:(void (^)(BOOL updated, NSError *error))block {
     
-    NSString *URLPath = [NSString stringWithFormat:@"recipes/%d", self.ridValue];
+    NSString *URLString = [NSString stringWithFormat:@"recipes/%d", self.ridValue];
     NSDictionary *params = [self parameters];
+
+    NSLog(@"Updating object: %@", params);
     
-    return [[HyperAPIClient sharedClient] PUT:URLPath parameters:params success:^(NSURLSessionDataTask *task, id responseObject) {
-        
-        if (block) {
-            block(YES, nil);
-        }
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        if (block) {
-            block(NO, error);
+//    return [[HyperAPIClient sharedClient] PUT:URLString parameters:params success:^(NSURLSessionDataTask *task, id responseObject) {
+//        NSLog(@"Update response: %@", responseObject);
+//        
+//        if (block) {
+//            block(YES, nil);
+//        }
+//    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+//        if (block) {
+//            NSLog(@"%@", error);
+//            block(NO, error);
+//        }
+//    }];
+    
+    
+    NSURL *baseURL = [NSURL URLWithString:@"http://hyper-recipes.herokuapp.com"];
+    
+    HyperAPIClient *manager = [HyperAPIClient sharedClient];
+    NSMutableURLRequest *request = [[manager requestSerializer] multipartFormRequestWithMethod:@"PUT" URLString:[[NSURL URLWithString:URLString relativeToURL:baseURL] absoluteString] parameters:[self parameters] constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        [formData appendPartWithFileData:self.photo name:@"recipe[photo]" fileName:@"photo.jpg" mimeType:@"photo/jpeg"];
+    } error:nil];
+    
+    NSURLSessionUploadTask *uploadTask = [manager uploadTaskWithStreamedRequest:request progress:nil completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+        if (error) {
+            NSLog(@"Error: %@", error);
+            if (block) {
+                block(NO, error);
+            }
+        } else {
+            NSLog(@"Success: %@ %@", response, responseObject);
+            if (block) {
+                block(YES, nil);
+            }
         }
     }];
+    [uploadTask resume];
+    
+    return uploadTask;
 }
 
 - (NSURLSessionDataTask *)deleteWithBlock:(void (^)(BOOL deleted, NSError *error))block {

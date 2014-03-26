@@ -130,7 +130,9 @@
     
     HyperAPIClient *manager = [HyperAPIClient sharedClient];
     NSMutableURLRequest *request = [[manager requestSerializer] multipartFormRequestWithMethod:@"PUT" URLString:[[NSURL URLWithString:URLString relativeToURL:baseURL] absoluteString] parameters:[self parameters] constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-        [formData appendPartWithFileData:self.photo name:@"recipe[photo]" fileName:@"photo.jpg" mimeType:@"photo/jpeg"];
+        if (self.photo) {
+            [formData appendPartWithFileData:self.photo name:@"recipe[photo]" fileName:@"photo.jpg" mimeType:@"photo/jpeg"];
+        }
     } error:nil];
     
     NSURLSessionUploadTask *uploadTask = [manager uploadTaskWithStreamedRequest:request progress:nil completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {

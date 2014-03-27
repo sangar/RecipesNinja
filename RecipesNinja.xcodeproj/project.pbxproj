@@ -14,6 +14,7 @@
 		C348CC2918D795BC0031A043 /* TextViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C348CC2818D795BC0031A043 /* TextViewTableViewCell.m */; };
 		C34B70D018D4F7D3007D12D4 /* RecipeDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C34B70CF18D4F7D3007D12D4 /* RecipeDetailViewController.m */; };
 		C356D2CD18D5BDD80015DE2A /* CoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C356D2CC18D5BDD80015DE2A /* CoreDataHelper.m */; };
+		C39DB63218E4D34F007D7D67 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = C39DB63118E4D34F007D7D67 /* Podfile */; };
 		C3EAAE9918D0A8F30097AE02 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3EAAE9818D0A8F30097AE02 /* Foundation.framework */; };
 		C3EAAE9B18D0A8F30097AE02 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3EAAE9A18D0A8F30097AE02 /* CoreGraphics.framework */; };
 		C3EAAE9D18D0A8F30097AE02 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3EAAE9C18D0A8F30097AE02 /* UIKit.framework */; };
@@ -68,6 +69,7 @@
 		C34B70CF18D4F7D3007D12D4 /* RecipeDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipeDetailViewController.m; sourceTree = "<group>"; };
 		C356D2CB18D5BDD80015DE2A /* CoreDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataHelper.h; sourceTree = "<group>"; };
 		C356D2CC18D5BDD80015DE2A /* CoreDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataHelper.m; sourceTree = "<group>"; };
+		C39DB63118E4D34F007D7D67 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; };
 		C3EAAE9518D0A8F30097AE02 /* RecipesNinja.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecipesNinja.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3EAAE9818D0A8F30097AE02 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C3EAAE9A18D0A8F30097AE02 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -222,6 +224,7 @@
 		C3EAAEA118D0A8F30097AE02 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C39DB63118E4D34F007D7D67 /* Podfile */,
 				C3ECFA4118D25F7F006598FC /* README.md */,
 				C3EAAEA218D0A8F30097AE02 /* RecipesNinja-Info.plist */,
 				C3EAAEA318D0A8F30097AE02 /* InfoPlist.strings */,
@@ -355,6 +358,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C39DB63218E4D34F007D7D67 /* Podfile in Resources */,
 				C3ECFA4218D25F7F006598FC /* README.md in Resources */,
 				C348CC2018D794730031A043 /* Localization.strings in Resources */,
 				C3EAAEA518D0A8F30097AE02 /* InfoPlist.strings in Resources */,
